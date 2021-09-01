@@ -1,17 +1,12 @@
-let money = 30000;
-let income = "Фриланс";
-let addExpenses = "Налоги, Электричество, Продукты";
-let deposit = false;
-let mission = 150000;
-let period = 12;
-let budgetDay = money / 30;
-// alert("Hello");
-// console.log("World");
-console.log(typeof money);
-console.log(typeof income);
-console.log(typeof deposit);
-console.log(addExpenses.length);
-console.log("Период равен " + period + " месяцев");
-console.log("Цель заработать " + mission + " рублей");
-console.log(addExpenses.toLowerCase().split(", "));
-console.log(budgetDay);
+let num = 266219;
+function Func(x) {
+  let array = String(x).split("");
+  let sum = 0;
+  for (let i = 0; i < array.length; i++) {
+    sum += +array[i];
+  }
+  console.log(sum);
+  let result = String(sum ** 3);
+  console.log(result.substr(0, 2));
+}
+Func(num);
