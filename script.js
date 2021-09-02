@@ -1,71 +1,97 @@
 "use strict";
-// Строгий режим - эта директива появилась в спецификации es5 - она указывает, что нужно обрабатывать код по современным правилам. Исправляет ошибки, увеличивает безопасность, ускоряет отладку кода, код становится оптимизированным. Пишем его в самом начале
 
-// выдаст модальное окно с ок и cancel, возвращает boolean true или false
-// let question = confirm("Тебе есть 18 лет?");
-//prompt - возвращает строку всегда, 2 параметром можно указать дефолтное значение, cancel - вернет null
-// let question2 = prompt("Сколько тебе лет?", "18");
-// console.log(question2);
-// перед prompt пишем + +prompt - для преобразования в число
+// Имя функции - глагол
+// Такую функцию можно вызвать до и после объявления, считается, что она находится в 0 строке, т.к сразу читается программой
+// function outputMessage(name, age) {
+//   console.log("Hello " + name);
+//   console.log("My age " + age);
+// }
+// outputMessage("Max", 30);
 
-// console.log(5 + "5");
-// console.log(typeof (5 + "5"));
-// console.log(5 - "5");
-// console.log(5 * "5");
-// console.log(5 / "5");
-// console.log("js" / "5");
-// console.log(5 == "5");
-// console.log(Boolean(5));
-// console.log(!!"5");
-//String - преобразует в строку
-// console.log(typeof String(10));
-// если число сложить с пустой строкой, то получим тип данных - строка
-// console.log(10 + "");
-//10 .toString() или 10..toString() или (10).toString() - преобразовать в строку
-// console.log(typeof (10).toString());
+//Такую функцию можно вызвать только после ее объявления
+// const consoleMessage = function () {
+//   console.log("Hello, friend!");
+// };
+// consoleMessage();
 
-// Number Преобразует в число
-// console.log(typeof Number("33"));
-//+ - тернарный оператор плюс приводит к типу данных число
-// console.log(typeof +"33");
+//3 способ объявления функции с помощью конструкции. Этот способ редко используется
+// const alertMessage = new Function('alert("Hi")');
+// alertMessage();
 
-// умнажение на 1  преобразует строку в число
-// let n = "10";
-// n *= 1;
-// console.log(typeof n);
+//Негласное правило функций - одна функция - одно действие
 
-//parseInt и parseFloat преобразует в тип данных число по символьно, буквы не переведет
-// console.log(parseInt("10 px"));
-// console.log(parseFloat("10.5 px"));
+// let res = 0;
+// const sum = function (a, b) {
+//   //   res = a + b;
+//   return a + b;
+// };
+// // sum(3, 5);
+// // console.log(res);
+// let res = sum(3, 5);
+// console.log("res ", res);
 
-// if (true) console.log("Истина");
-// if (false) console.log("Этот код не выполнится");
+// Добавление к практики 1 код и 2 код в видео - конец видео
+// let showTypeOf = function (data) {
+//   console.log(data, typeof data);
+// };
+// showTypeOf(money);
+// showTypeOf(income);
+// showTypeOf(deposit);
 
-let n = 5;
-if (n === 5) {
-  console.log("Команда 1");
-} else if (n === 4) {
-  console.log("Команда 2");
-} else {
-  console.log("Не верно");
+//Это анонинмная функция т.к. после function нет названия функции
+// const sum = function (a, b) {
+//   return a + b;
+// };
+
+// Тоже анонимная функция
+// const sum2 = new Function("a", "b", "return a + b");
+
+//Именованная функция.  Если после function есть  имя - это именованная функция.
+// function sum3(a, b) {
+//   return a + b;
+// }
+
+// console.log(sum);
+// console.log(sum2);
+// console.log(sum3);
+
+//Callback функции - 1 пример
+// const doNum = function (a, b, callback) {
+//   if (typeof a === "number" && typeof b === "number") {
+//     callback(a, b);
+//   }
+// };
+
+// doNum(5, 10, function (a, b) {
+//   console.log(a + b);
+// });
+
+// function mult(a, b) {
+//   console.log(a * b);
+// }
+// doNum(3, 5, mult);
+
+// Тоесть callback функции - это когда 1 функция прописывается в другой и очередность выполнения соблбюдается, даже если есть например задержка выполнения как в примере(1 сек)
+// Callback функция - всегда передается в другую функцию и выполняется после выполнения той функции
+// function one(callback) {
+//   console.log("Делаем запрос на сервер");
+//   setTimeout(function () {
+//     console.log("Получаем данные от сервера");
+//     callback();
+//   }, 1000);
+// }
+// function two() {
+//   console.log("Выводим на страницу");
+// }
+// one(two);
+
+//детерминированная функция - зависит только от входных данных
+
+function foo(a, b) {
+  const sum = a + b;
+  return sum;
 }
+console.log(foo(2, 3));
 
-switch (n) {
-  case 3:
-    console.log(3);
-    break;
-  case 4:
-    console.log(4);
-    break;
-  case 5:
-    console.log(5);
-    break;
-  case 6:
-    console.log(6);
-    break;
-  default:
-    console.log("не верно");
-}
-
-let result = n === 5 ? "верно" : "не верно";
-console.log("result ", result);
+//Чистая функция не должна иметь побочных эффектов( не должна не от чего зависеть в  том числе) - выводить console.log, менять значение переменных вне функции, использовать внешние переменные и должна быть детерменированной
+// Чистые функции нужны для отладки, понимания и тестирования.
