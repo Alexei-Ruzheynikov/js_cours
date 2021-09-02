@@ -1,153 +1,71 @@
-// let myVar;
-// console.log("myVar ", myVar); //undefined
+"use strict";
+// Строгий режим - эта директива появилась в спецификации es5 - она указывает, что нужно обрабатывать код по современным правилам. Исправляет ошибки, увеличивает безопасность, ускоряет отладку кода, код становится оптимизированным. Пишем его в самом начале
 
-// //null - пустое значение
-// console.log(null > 0); //false
-// console.log(null == 0); //false
-// console.log(null >= 0); //true
+// выдаст модальное окно с ок и cancel, возвращает boolean true или false
+// let question = confirm("Тебе есть 18 лет?");
+//prompt - возвращает строку всегда, 2 параметром можно указать дефолтное значение, cancel - вернет null
+// let question2 = prompt("Сколько тебе лет?", "18");
+// console.log(question2);
+// перед prompt пишем + +prompt - для преобразования в число
 
-// myVar = 10;
-// console.log(typeof myVar);
-// myVar = "Hello world";
-// console.log(typeof myVar);
-// myVar = true;
-// console.log(typeof myVar);
-// myVar = null;
-// console.log(typeof myVar);
-// myVar = undefined;
-// console.log(typeof myVar);
-// myVar = Symbol();
-// console.log(typeof myVar);
-// myVar = {};
-// console.log(typeof myVar);
-
-//Всего - 7 типов данных
-// console.log(typeof myVar);
-
-//  массивы, рег выражения и т д - это тип данных Объект
-// let myArr = [];
-// let regExp = /w+/g;
-// let func = function () {};
-// let error = Error("error message");
-// let date = new Date();
-// console.log(typeof myArr);
-
-//Какой тип данных - typeof
-
-// let myTrue = true;
-// let myFalse = false;
-
-// console.log(2 === 2);
-// console.log(2 === 3);
-
-//Преобразование в Boolean тип (после преобразования все значения будут  иметь true)
-// console.log(Boolean(5));
-// console.log(Boolean("Hello"));
-
-//Исключение, число 0,undefined,null,NaN,'' принимают значение false
-// console.log(Boolean(0));
-// console.log(Boolean(undefined));
-// console.log(Boolean(null));
-// console.log(Boolean(NaN));
-// console.log(Boolean(""));
-
-// || - или && - и ! - отрицание
-// console.log(true || true);
-// console.log(true || false);
-// console.log(false || false);
-// console.log(true && true);
-// console.log(true && false);
-// console.log(false && false);
-// console.log(!true);
-// console.log(!false);
-
-//Числа бывают целые, дробные(с плавающе точкой), експенсеальная форма, двоичная форма, восьмеричная форма(лучше через букву o), шестнадцатеричная форма, бесконенчость,
-// console.log(50);
-// console.log(8.5);
-// console.log(0.5);
-// console.log(5e6);
-// console.log(0b1111);
-// console.log(0o11);
-// console.log(0x22aacc);
-// console.log(infinity);
-// console.log(NaN);
-// при делении числа на 0 получаем бесконечность
-// 0 разделим на 0, бесконечность разделим на бесконечность, строку умножим на число - получим NaN
-
-//Унарный плюс - для преобразования в тип данных число
-// console.log(+5);
-// console.log(-5);
-// let i = 5;
-//инкремент и декремент
-// console.log(++i);
-// console.log(i++);
-// console.log(i);
-// console.log(i--);
-// console.log(i);
-// console.log(--i);
-
-//Бинарные операторы + - * / %
-
-// let n = 15;
-// // n = n + 3;
-// n += 3;
-// // n = n - 6;
-// n -= 6;
-// // n = n / 3;
-// n /= 3;
-// console.log(n);
-
-//Равенства
-// console.log(3 > 2);
-// console.log(3 < 2);
-// console.log(5 >= 3);
-// console.log(10 <= 5);
-// console.log(5 === 5);
-// console.log(5 !== 6);
+// console.log(5 + "5");
+// console.log(typeof (5 + "5"));
+// console.log(5 - "5");
+// console.log(5 * "5");
+// console.log(5 / "5");
+// console.log("js" / "5");
 // console.log(5 == "5");
-// console.log(5 != "5");
+// console.log(Boolean(5));
+// console.log(!!"5");
+//String - преобразует в строку
+// console.log(typeof String(10));
+// если число сложить с пустой строкой, то получим тип данных - строка
+// console.log(10 + "");
+//10 .toString() или 10..toString() или (10).toString() - преобразовать в строку
+// console.log(typeof (10).toString());
 
-//Метод извлечения корня
-// console.log(Math.sqrt(25));
+// Number Преобразует в число
+// console.log(typeof Number("33"));
+//+ - тернарный оператор плюс приводит к типу данных число
+// console.log(typeof +"33");
 
-//Метод pow возводит в степень
-// console.log(Math.pow(5, 3));
+// умнажение на 1  преобразует строку в число
+// let n = "10";
+// n *= 1;
+// console.log(typeof n);
 
-//Целое ли число
-// console.log(Number.isInteger(5.5));
+//parseInt и parseFloat преобразует в тип данных число по символьно, буквы не переведет
+// console.log(parseInt("10 px"));
+// console.log(parseFloat("10.5 px"));
 
-// let myString = 'Hell "o" world!';
-// console.log(myString);
+// if (true) console.log("Истина");
+// if (false) console.log("Этот код не выполнится");
 
-// let str = "Hello my Friends!";
-// console.log(str.length);
-//вызывается метод () круглыми скобками вконце
-// console.log(str.toUpperCase());
-// console.log(str.toLowerCase());
-//charAt -возвращает символ по индексу
-// console.log(str.charAt(0));
-//charAt уже не используют, можно воспользоваться просто квадратными скобками и индексом
-// console.log(str[0]);
+let n = 5;
+if (n === 5) {
+  console.log("Команда 1");
+} else if (n === 4) {
+  console.log("Команда 2");
+} else {
+  console.log("Не верно");
+}
 
-//возвращают подстроку, не меняют исходную строку, а возвращают новую
-// substring - от какого - до конца или от какого до какого
-// console.log(str.substring(6));
-// console.log(str.substring(9, 15));
-// slice - можно указать минус - будет считать с конца
-// console.log(str.slice(6));
-// console.log(str.slice(-8));
-// substr - с какого символа начать и сколько символов взять
-// console.log(str.substr(6, 9));
-// console.log(str);
+switch (n) {
+  case 3:
+    console.log(3);
+    break;
+  case 4:
+    console.log(4);
+    break;
+  case 5:
+    console.log(5);
+    break;
+  case 6:
+    console.log(6);
+    break;
+  default:
+    console.log("не верно");
+}
 
-// indexOf - вернет индекс подстроки в строке, где начинается, если не найдет - вернет -1
-// console.log(str.indexOf("Friends"));
-
-// replace - заменяет одно на другое
-// console.log(str.replace("my Friends", "World"));
-
-// split -разделяет на массив через разделитель
-// let str = "apple, kiwi, orange";
-// console.log(str.split(", "));
-
-// Статьи по уроку
+let result = n === 5 ? "верно" : "не верно";
+console.log("result ", result);
