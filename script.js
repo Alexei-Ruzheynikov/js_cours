@@ -1,38 +1,46 @@
 "use strict";
-let money = +prompt("Ваш месячный доход?");
-let addExpenses = prompt(
-  "Перечислите возможные расходы за расчитываемый период через запятую"
-);
-let deposit = confirm("Есть ли у вас депозит в банке?");
-let expenses1 = prompt("Введите обязательную статью расходов?");
-let amount1 = +prompt("Во сколько это обойдется?");
-let expenses2 = prompt("Введите обязательную статью расходов?");
-let amount2 = +prompt("Во сколько это обойдется?");
-let budgetMonth = money - (amount1 + amount2);
-let income = "Фриланс";
-let mission = 150000;
-let period = 12;
-let budgetDay = budgetMonth / 30;
-let monthMission = Math.ceil(mission / budgetMonth);
-// alert("Hello");
-// console.log("World");
-console.log(typeof money);
-console.log(typeof income);
-console.log(typeof deposit);
-console.log(addExpenses.length);
-console.log("Период равен " + period + " месяцев");
-console.log("Цель заработать " + mission + " рублей");
-console.log(addExpenses.toLowerCase().split(", "));
-console.log("Бюджет на месяц " + budgetMonth);
-console.log("Цель будет достигнута за " + monthMission + " месяцев");
-console.log("Бюджет на день " + Math.floor(budgetDay));
+// Задача 1
+let lang = "ru";
+let weekRu = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+let weekEn = ["Mn", "Ts", "Wd", "Th", "Fr", "St", "Sn"];
 
-if (budgetDay >= 1200) {
-  console.log("У вас большой уровень дохода");
-} else if (budgetDay >= 600 && budgetDay < 1200) {
-  console.log("У вас средний уровень дохода");
-} else if (budgetDay < 600 && budgetDay > 0) {
-  console.log("К сожалению у вас уровень дохода ниже среднего");
-} else if (budgetDay < 0) {
-  console.log("Что то пошло не так");
+if (lang === "ru") {
+  console.log(weekRu);
+} else if (lang === "en") {
+  console.log(weekEn);
 }
+
+switch (lang) {
+  case "ru":
+    console.log(weekRu);
+    break;
+  case "en":
+    console.log(weekEn);
+    break;
+  default:
+    break;
+}
+
+let arrLang = {
+  ru: weekRu,
+  en: weekEn,
+};
+console.log(arrLang[lang]);
+
+console.error("--------");
+// Задача 2
+
+let namePerson = "Артем";
+if (namePerson === "Артем") {
+  console.log("Директор");
+} else if (namePerson === "Максим") {
+  console.log("Преподаватель");
+} else {
+  console.log("Студент");
+}
+
+namePerson === "Артем"
+  ? console.log("Директор")
+  : namePerson === "Максим"
+  ? console.log("Преподаватель")
+  : console.log("Студент");
