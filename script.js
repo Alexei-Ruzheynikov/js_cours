@@ -1,41 +1,78 @@
 "use strict";
 
-//Область видимости js
-// let x = 5;
-// console.log(x);
+// let charNumb = 55;
 
-// function one() {
-//   let y = 10;
-//   console.log(x);
-//   console.log(y);
+// let isNumber = function (n) {
+//   return !isNaN(parseFloat(n)) && isFinite(n);
+// };
+// let flags;
+// function flag(){
+//     if (flags = false){
+//         break;
+//     }
 // }
-// one();
-// console.log(y);
 
-// lexicalEnvironment - лексическое окружение
-// scope - ссылка на lexicalEnvironment  родителя
-// globalScope - объект window в браузере
-// если не найдет переменную, то выдаст ошибку
+// let result;
+// while (result !== charNumb) {
+//   let num = prompt("Угадай число от 1 до 100");
 
-// Лексическое окружение определяется во время вызова функции после передачи аргументов
-// Scope - определяется во время создания функции, когда мы ее описываем
+//   if (num === null) {
+//     alert("Игра окончена");
+//     break;
+//   }
 
-// Можно будет пересмотреть этот урок потом по области видимости и замыканиям
+//   while (!isNumber(num)) {
+//     num = prompt("Введите число");
+//     if (num === null) {
+//       alert("Игра окончена");
+//       break;
+//     }
+//   }
+//   if (isNumber(num)) {
+//     result = Number(num);
+//     if (result > charNumb) {
+//       alert("Загаданное число меньше");
+//     } else if (result < charNumb) {
+//       alert("Загаданное число больше");
+//     }
+//   }
 
-//Замыкания
-// Замыкание - функция внутри функции; это функция со всеми ее переменными, которые ей доступны
-//Если объявляем функцию внтури другой функции, то внутрення функция называется замыканием, т.к. эта функция сохраняет доступ к переменным внешней функции
+//   //   break;
+// }
 
-function one() {
-  let x = 10;
-  function two(y) {
-    return x + y;
-  }
+// if (result === charNumb) {
+//   alert("Поздравляю, Вы угадали!!!");
+// }
 
-  function tree() {
-    let y = 5;
-    return x * y;
-  }
-  return two(15);
+let isNumber = function (n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+function guessNumber() {
+  const randomNumber = Math.round(Math.random() * 100);
+  console.log(randomNumber);
+  return function () {
+    let userNumber = prompt("Угадай число от 1 до 100");
+    if (userNumber === null) {
+      alert("Игра окончена");
+    } else if (isNumber(userNumber)) {
+      if (+userNumber > randomNumber) {
+        alert("Загаданное число меньше");
+        startGame();
+      } else if (+userNumber < randomNumber) {
+        alert("Загаданное число больше");
+        startGame();
+      } else if (+userNumber === randomNumber) {
+        alert("Поздравляю, Вы угадали!!!");
+      } else {
+        alert("Введите число");
+        startGame();
+      }
+    } else {
+      alert("Введите число");
+      startGame();
+    }
+  };
 }
-console.log(one());
+let startGame = guessNumber();
+startGame();
