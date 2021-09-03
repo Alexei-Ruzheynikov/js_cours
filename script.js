@@ -13,37 +13,22 @@ let addExpenses = prompt(
 let expenses = [];
 
 let start = function () {
-  money = prompt("Ваш месячный доход?");
-  //   while (isNaN(money) || money.trim() === "" || money === null) {
-  //     money = prompt("Ваш месячный доход?");
-  //   }
-  while (!isNumber(money)) {
+  do {
     money = prompt("Ваш месячный доход?");
-  }
+  } while (!isNumber(money));
 };
 start();
 
 function getExpensesMonth(sum1, sum2) {
   let sum = 0;
   for (let i = 0; i < 2; i++) {
-    expenses[i] = +prompt(
-      "Введите обязательную статью расходов?",
-      "Садик государственный"
-    );
+    expenses[i] = prompt("Введите обязательную статью расходов?", "Садик");
 
-    // if (i === 0) {
-    //   expenses1 = +prompt(
-    //     "Введите обязательную статью расходов?",
-    //     "Садик государственный"
-    //   );
-    // } else if (i === 1) {
-    //   expenses2 = +prompt(
-    //     "Введите обязательную статью расходов?",
-    //     "Садик частный"
-    //   );
-    // }
-
-    sum += +prompt("Во сколько это обойдется?");
+    let amount = prompt("Во сколько это обойдется?");
+    while (!isNumber(amount)) {
+      amount = prompt("Во сколько это обойдется?");
+    }
+    sum += Number(amount);
   }
   console.log(expenses);
   return sum;
@@ -91,5 +76,10 @@ console.log(getStatusIncome());
 console.log("Период равен " + period + " месяцев");
 console.log("Цель заработать " + mission + " рублей");
 console.log(addExpenses.toLowerCase().split(", "));
-console.log("Цель будет достигнута за " + monthMission + " месяцев");
 console.log("Бюджет на день " + Math.floor(budgetDay));
+
+if (monthMission <= 0) {
+  console.log("Цель не будет достигнута");
+} else {
+  console.log("Цель будет достигнута за " + monthMission + " месяцев");
+}
