@@ -1,52 +1,10 @@
 "use strict";
 
-// let charNumb = 55;
-
-// let isNumber = function (n) {
-//   return !isNaN(parseFloat(n)) && isFinite(n);
-// };
-// let flags;
-// function flag(){
-//     if (flags = false){
-//         break;
-//     }
-// }
-
-// let result;
-// while (result !== charNumb) {
-//   let num = prompt("Угадай число от 1 до 100");
-
-//   if (num === null) {
-//     alert("Игра окончена");
-//     break;
-//   }
-
-//   while (!isNumber(num)) {
-//     num = prompt("Введите число");
-//     if (num === null) {
-//       alert("Игра окончена");
-//       break;
-//     }
-//   }
-//   if (isNumber(num)) {
-//     result = Number(num);
-//     if (result > charNumb) {
-//       alert("Загаданное число меньше");
-//     } else if (result < charNumb) {
-//       alert("Загаданное число больше");
-//     }
-//   }
-
-//   //   break;
-// }
-
-// if (result === charNumb) {
-//   alert("Поздравляю, Вы угадали!!!");
-// }
-
 let isNumber = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
+
+let count = getCounter();
 
 function guessNumber() {
   const randomNumber = Math.round(Math.random() * 100);
@@ -58,12 +16,19 @@ function guessNumber() {
     } else if (isNumber(userNumber)) {
       if (+userNumber > randomNumber) {
         alert("Загаданное число меньше");
-        startGame();
+        count();
       } else if (+userNumber < randomNumber) {
         alert("Загаданное число больше");
-        startGame();
+        count();
       } else if (+userNumber === randomNumber) {
-        alert("Поздравляю, Вы угадали!!!");
+        let newGuess = confirm(
+          "Поздравляю, Вы угадали!!! Хотели бы сыграть еще?"
+        );
+        if (newGuess) {
+          count = getCounter();
+          startGame = guessNumber();
+          startGame();
+        }
       } else {
         alert("Введите число");
         startGame();
@@ -76,3 +41,25 @@ function guessNumber() {
 }
 let startGame = guessNumber();
 startGame();
+
+function getCounter() {
+  let counter = 10;
+  return function () {
+    counter--;
+    if (counter > 1) {
+      alert("Осталось попыток " + counter);
+      startGame();
+    } else if (counter === 1) {
+      alert("Осталась последняя попытка");
+      startGame();
+    } else if (counter === 0) {
+      let newGuess = confirm("Попытки закончились, хотите сыграть еще?");
+      if (newGuess) {
+        counter = 10;
+        startGame = guessNumber();
+        startGame();
+      }
+    }
+    return counter;
+  };
+}
