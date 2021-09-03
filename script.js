@@ -6,7 +6,7 @@ let isNumber = function (n) {
 
 let count = getCounter();
 
-function guessNumber() {
+function gameBot() {
   const randomNumber = Math.round(Math.random() * 100);
   console.log(randomNumber);
   return function () {
@@ -21,25 +21,25 @@ function guessNumber() {
         alert("Загаданное число больше");
         count();
       } else if (+userNumber === randomNumber) {
-        let newGuess = confirm(
-          "Поздравляю, Вы угадали!!! Хотели бы сыграть еще?"
-        );
+        let newGuess = confirm("Поздравляю, Вы угадали!!! Хотите сыграть еще?");
         if (newGuess) {
           count = getCounter();
-          startGame = guessNumber();
+          startGame = gameBot();
           startGame();
         }
-      } else {
-        alert("Введите число");
-        startGame();
       }
+      //   else {
+      //     alert("Введите число");
+      //     startGame();
+      //   }
     } else {
       alert("Введите число");
       startGame();
     }
   };
 }
-let startGame = guessNumber();
+
+let startGame = gameBot();
 startGame();
 
 function getCounter() {
@@ -47,7 +47,7 @@ function getCounter() {
   return function () {
     counter--;
     if (counter > 1) {
-      alert("Осталось попыток " + counter);
+      alert("Осталось попыток: " + counter);
       startGame();
     } else if (counter === 1) {
       alert("Осталась последняя попытка");
@@ -56,7 +56,7 @@ function getCounter() {
       let newGuess = confirm("Попытки закончились, хотите сыграть еще?");
       if (newGuess) {
         counter = 10;
-        startGame = guessNumber();
+        startGame = gameBot();
         startGame();
       }
     }
