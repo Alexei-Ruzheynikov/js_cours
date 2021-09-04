@@ -1,151 +1,57 @@
 "use strict";
 
-let money;
-let start = function () {
-  do {
-    money = prompt("Ваш месячный доход?");
-  } while (!isNumber(money));
-};
-start();
+// 6 урок важный
 
-//Если это число - true, если не число - false; isFinite - число конечное?-true, бесконечное - false
-// Проверка что число !isNumber
-function isNumber(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
-//Проверка что строка  isString
-function isString(n) {
-  return !isNaN(parseFloat(n)) || n.trim() === "" || n === null;
-}
+//Что такое магические числа?
 
-let appData = {
-  income: {},
-  addIncome: [],
-  expenses: {},
-  addExpenses: [],
-  deposit: false,
-  percentDeposit: 0,
-  moneyDeposit: 0,
-  mission: 50000,
-  budget: money,
-  budgetDay: 0,
-  budgetMonth: 0,
-  expensesMonth: 0,
-  period: 3,
-  asking: function () {
-    if (confirm("Есть ли у вас дополнительный источник заработка?")) {
-      let itemIncome = prompt("Какой у вас дополнительный заработок", "Таксую");
-      while (isString(itemIncome)) {
-        itemIncome = prompt("Какой у вас дополнительный заработок", "Таксую");
-      }
-      let cashIncome = prompt(
-        "Сколько в месяц вы на этом зарабатываете?",
-        10000
-      );
-      while (!isNumber(cashIncome)) {
-        cashIncome = prompt("Сколько в месяц вы на этом зарабатываете?", 10000);
-      }
-      appData.income[itemIncome] = cashIncome;
-    }
+//Решение 5 усложненного задания
+// const START = 0;
+// const END = 100;
 
-    let addExpenses = prompt(
-      "Перечислите возможные расходы за расчитываемый период через запятую"
-    );
-    while (isString(addExpenses)) {
-      addExpenses = prompt(
-        "Перечислите возможные расходы за расчитываемый период через запятую"
-      );
-    }
-    appData.addExpenses = addExpenses.toLowerCase().split(", ");
-    let costs = addExpenses.split(", ");
-    let array = [];
-    for (let addExpense of appData.addExpenses) {
-      addExpense = addExpense.charAt(0).toUpperCase() + addExpense.substring(1);
-      array.push(addExpense);
-    }
-    console.log(array.join(", "));
+// function checkPrime(num) {
+//   for (let i = 2; i < num; i++) {
+//     if (num % i === 0) {
+//       return false;
+//     }
+//   }
+//   if (num > 1) return true;
+// }
 
-    appData.deposit = confirm("Есть ли у вас депозит в банке?");
+// function getPrimeNum(start, end) {
+//   for (let i = start; i <= end; i++) {
+//     if (checkPrime(i)) {
+//       console.log("Число " + i + " простое и его делители 1 и " + i);
+//     }
+//   }
+// }
+// getPrimeNum(START, END);
 
-    for (let i = 0; i < 2; i++) {
-      let key = prompt(
-        "Введите обязательную статью расходов?",
-        "Указываем разные"
-      );
-      let value = prompt("Во сколько это обойдется?");
-      while (!isNumber(value)) {
-        value = prompt("Во сколько это обойдется?");
-      }
-      appData.expenses[key] = value;
-    }
-  },
-  getExpensesMonth: function () {
-    let sum = 0;
-    for (let key in appData.expenses) {
-      sum += +appData.expenses[key];
-    }
-    appData.expensesMonth = sum;
-  },
+//Задача 2
+// function foo(x) {
+//   debugger;
+//   if (x < 0) return;
+//   console.log("begin: " + x);
+//   foo(x - 1);
+//   console.log("end: " + x);
+// }
+// foo(5);
 
-  getBudget: function () {
-    appData.budgetMonth = money - appData.expensesMonth;
-    appData.budgetDay = appData.budgetMonth / 30;
-    return;
-  },
+//Задача 3
+// function fact(x) {
+//   if (x === 0) return 1;
+//   return x * fact(x - 1);
+// }
+// console.log(fact(5));
 
-  getTargetMonth: function () {
-    let monthMission = Math.ceil(+appData.mission / +appData.budgetMonth);
-
-    if (monthMission <= 0) {
-      return "Цель не будет достигнута";
-    } else {
-      return "Цель будет достигнута за " + monthMission + " месяцев";
-    }
-  },
-
-  getStatusIncome: function () {
-    if (appData.budgetDay >= 1200) {
-      return "У вас большой уровень дохода";
-    } else if (appData.budgetDay >= 600 && appData.budgetDay < 1200) {
-      return "У вас средний уровень дохода";
-    } else if (appData.budgetDay < 600 && appData.budgetDay > 0) {
-      return "К сожалению у вас уровень дохода ниже среднего";
-    } else if (appData.budgetDay < 0) {
-      return "Что то пошло не так";
-    }
-  },
-  getInfoDeposit: function () {
-    if (appData.deposit) {
-      appData.percentDeposit = prompt("Какой годовой процент?", "10");
-      while (!isNumber(appData.percentDeposit)) {
-        appData.percentDeposit = prompt("Какой годовой процент?", "10");
-      }
-      appData.moneyDeposit = prompt("Какая сумма заложена", 10000);
-      while (!isNumber(appData.moneyDeposit)) {
-        appData.moneyDeposit = prompt("Какая сумма заложена", 10000);
-      }
-    }
-  },
-  calcSavedMoney: function () {
-    return appData.budgetMonth * appData.period;
-  },
+const logger = function (fn) {
+  return function () {
+    const args = Array.from(arguments);
+    const res = fn.apply(null, args);
+  };
 };
 
-appData.asking();
-appData.getExpensesMonth();
-appData.getBudget();
-appData.getTargetMonth();
-appData.getStatusIncome();
-appData.getInfoDeposit();
+const bar = logger();
+bar(1, 2, 3, 4, 5);
+// console.log("bar: ", bar);
 
-console.log("Расходы за месяц " + appData.expensesMonth);
-console.log(appData.getTargetMonth());
-console.log(appData.getStatusIncome());
-
-function progFile(name) {
-  console.log("Наша программа включает в себя данные: ");
-  for (let key in name) {
-    console.log("Свойство " + key + " Значение " + name[key]);
-  }
-}
-progFile(appData);
+//Какие параметры принимает foreach кроме callback функций?
