@@ -1,250 +1,86 @@
 "use strict";
 
-//Функции высшего порядка
+//Api -набор доступных свойств и методов для решения задач, чаще всего реализованные в виде объектов
+// Api с которыми будем работать DOM(для работы с элементами на странице),BOM(необходим для работы с браузером) и htmlxpreqvest - объект для работы с сервером и др.
+//Корень DOM - document
 
-//Эта функция - функция высшего порядка, т.к. она принимает callback функцию ( если функция принимает другую функцию - то это функция высшего порядка)
-// function foo(data, callback) {
-//   if (typeof data === "string") {
-//     callback(data, "строка");
-//   } else {
-//     callback(data, "не строка");
-//   }
-// }
-// foo(123, function (db, res) {
-//   console.log(db, res);
-// });
+//У document - нет родительских элементов
+// console.log(document.parentElement);
 
-//
-//
+//htmlcollection - псевдомассив
+//У document - дочерний элемент html
+// console.log(document.children);
 
-// const bar = function (a) {
-//   const b = "второго замкнуло";
-//   return function (c) {
-//     console.log(a, b, c);
-//   };
-// };
-// const foo = bar("первый замкнут");
-// console.log(foo);
-// foo("Третий не замкнут");
+//Для нахождения по id используем метод getElementById
+// console.log(document.getElementById("main-head"));
 
-//
-//
+//Метод getElementsByTagName поиск по тэгам, а в квадратных скобках указываем индекс конкретного тэга, если их много
+// console.log(document.getElementsByTagName("h1")[0]);
 
-// Ченинг простой пример
-// const foo = function (a) {
-//   const x = a * a;
-//   return function (b) {
-//     const y = a / b;
+// console.log(document.getElementsByClassName("head"));
 
-//     return function (c) {
-//       return x + y + c;
-//     };
-//   };
-// };
-// const foo1 = foo(4);
-// console.log("foo1: ", foo1);
-// const foo2 = foo1(2);
-// console.log("foo2: ", foo2);
-// const foo3 = foo2(3);
-// console.log("foo3: ", foo3);
+//Рекомендуется getElementById для ID и querySelector для остальных
+//querySelector - получит самый первый, который встретится в DOM дереве, .head -класс, #main-head -по ID, по тэгу - header, по атрибуту [title="Основной заголовок"]
+// console.log(document.querySelector(".head"));
+// console.log(document.querySelector("#main-head"));
+// console.log(document.querySelector("h1"));
+// console.log(document.querySelector('[title="Основной заголовок"]'));
 
-// const bar = foo(10)(2);
-// console.log("bar: ", bar);
-// console.log("bar: ", bar(95));
+// querySelectorAll - получим коллекцию NodeList всех элементов
+// console.log(document.querySelectorAll(".head"));
 
-//
-//
-// const foo = function () {
-//   const arr = [];
-//   return function (a) {
-//     arr.push(a);
-//     console.log(arr);
-//   };
-// };
-// const foo1 = foo();
-// const foo2 = foo();
+//console.dir - посмотреть методы и свойства объекта  console.dir(mainHead);
+//getAttribute("title") - получает содержимое атрибута в скобках
+//setAttribute("title", "Новый title") - Вносит изменение в значение атрибута; setAttribute (принимает 2 параметра)
+// const mainHead = document.querySelector(".head");
+// mainHead.setAttribute("title", "Новый title");
+// mainHead.setAttribute("style", "color:blue");
+// console.log(mainHead);
+// Так тоже можно смотреть и изменять значения некоторых атрибутов, т.к. некоторые из них  объекты
+// mainHead.title = "Новый title!";
+// console.log(mainHead.title);
 
-// foo1(1);
-// foo2(1);
+// console.log(mainHead.getAttribute("title"));
 
-// foo1(45);
-// foo1(["a", "b"]);
+//Чтобы получить класс необходимо написать className, но при добавлении новых - затирает старые классы
+// mainHead.className = "head_red";
+// console.log(mainHead.className);
 
-// foo1("dsgag");
-// foo1({ a: 1 });
-// foo1([1, 2, 3]);
+// .classList.add("head_red") добавляет класс, но не затирает те, что были изначально
+//.classList.remove("head_black") - удаляет класс не трогая другие
+//.classList.contains('head_black') - делает проверку, есть ли такой класс - возвращает булевое значение
+//.classList.toggle("head_black") - добавляет если нет, убирает если есть
+// const mainHead = document.querySelector(".head");
+// console.log(mainHead.classList);
+// mainHead.classList.add("head_red");
+// console.log(mainHead.classList);
+// mainHead.classList.remove("head_black");
+// console.log(mainHead.classList);
+// console.log(mainHead.classList.contains("head_black"));
+// mainHead.classList.toggle("head_black");
+// console.log(mainHead.classList);
 
-// foo2(1);
+// const mainHead = document.querySelector(".head");
+// mainHead.style.color = "#fff";
+// mainHead.style.fontSize = "50px";
+// document.body.style.backgroundColor = "#033";
+// console.log(mainHead.style);
 
-//
-//
+//getComputedStyle(mainHead)- получаем свойства css, getComputedStyle(mainHead, 'after') получаем свойства css - псевдоэлемента; Информация о стилях берется из браузера - после того, как стили были применены к элементу
+// const mainHead = document.querySelector(".head");
+// const computedStyleMainHead = getComputedStyle(mainHead);
+// const computedStyleMainHead = getComputedStyle(mainHead, "after");
+// console.log(computedStyleMainHead);
+// console.log(computedStyleMainHead.width);
+// console.log(computedStyleMainHead.marginTop);
+// console.log(computedStyleMainHead.fontFamily);
+// console.log(computedStyleMainHead.font);
 
-// const foo = function () {
-//   const cache = {};
-//   return function (key) {
-//     if (cache[key]) {
-//       console.log(key + " уже есть в кэш");
-//     } else {
-//       cache[key] = "val: " + key;
-//       console.log(cache);
-//     }
-//   };
-// };
+//hgroup.querySelectorAll(".head") можно искать все элементы внутри какого-то элемента
+// const hgroup = document.querySelector("hgroup");
+// const head = hgroup.querySelectorAll(".head");
+// console.log(head);
 
-// const foo1 = foo();
-// const foo2 = foo();
-
-// foo1(5);
-// foo1("Hello");
-// foo1("5");
-// foo2(5);
-// foo2(2);
-
-// foo1(5);
-// foo2(2);
-// foo1("hello");
-// foo2("hi");
-// foo1(10);
-
-//
-//
-
-// const logger = function (cb) {
-//   return function () {
-//     const args = Array.prototype.slice.call(arguments);
-//     const res = cb.apply(null, args);
-//     console.log(
-//       "Вызов функции: " +
-//         cb.name +
-//         ". С аргументами: " +
-//         args +
-//         ". Результат вызова: " +
-//         res
-//     );
-//     return res;
-//   };
-// };
-// const sum = function (a, b, c) {
-//   return a + b + c;
-// };
-
-// const sumLog = logger(sum);
-// sumLog(2, 4, 6);
-
-//
-//
-
-// function foo() {
-//   const args = Array.prototype.slice.call(arguments);
-//   console.log("args: ", args);
-// }
-
-// foo(123, 234, 345);
-
-//
-//
-//При получении данных с сервера в большом объеме перебирать этой функции, она асинхорнна
-// const eacher = function (arr, callback) {
-//   let count = 0;
-//   const timer = setInterval(function () {
-//     callback(arr[count++]);
-//     if (count >= arr.length) clearInterval(timer);
-//   }, 0);
-// };
-
-// const names = [
-//   "Максим",
-//   "Андрей",
-//   "Артем",
-//   "Екатерина",
-//   "Вероника",
-//   "Каролина",
-// ];
-// const names2 = [
-//   "1Максим",
-//   "1Андрей",
-//   "1Артем",
-//   "Екатерина",
-//   "Вероника",
-//   "Каролина",
-// ];
-
-// const named = function (name) {
-//   console.log("Имя: " + name);
-// };
-
-// eacher(names2, named);
-
-// names.forEach(named);
-// named("Борис");
-
-//Разбор 6 домашнего задания сразу с усложненным заданием
-
-const getRandomInt = function (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const numCheck = function (n) {
-  return !isNaN(parseInt(n)) && isFinite(n);
-};
-
-const getNumber = function (str) {
-  const numUser = prompt(str);
-  if (numUser === null) return null;
-  if (numCheck(numUser)) {
-    return +numUser;
-  }
-  alert("Кажется вы забыли ввести число, попробуйте еще раз!");
-  getNumber(str);
-};
-
-const getCounter = function () {
-  let counter = 0;
-  return function () {
-    return counter++;
-  };
-};
-
-const gameBot = function (attemps, min, max) {
-  attemps = attemps || 10;
-  min = min || 0;
-  max = max || 100;
-
-  const random = getRandomInt(min, max);
-  const counter = getCounter();
-
-  return function checkNumber() {
-    const count = counter();
-
-    if (count < attemps) {
-      const number = getNumber(
-        "Попробуйте угадать число от " + min + " до " + max
-      );
-      if (number === null) return alert("Досвидание");
-      if (number > random) {
-        alert("Загаданное число меньше чем ваше!");
-        return checkNumber();
-      }
-      if (number < random) {
-        alert("Загаданное число больше чем ваше!");
-        return checkNumber();
-      }
-      if (number === random) {
-        alert("Молодец! Угадал!");
-      }
-    } else {
-      alert("Количество попыток закончилось! было загадано число " + random);
-    }
-    const questAC = confirm("Хотите сыграть еще?");
-    if (questAC) {
-      alert("Отлично, начинаем!");
-      gameBot(attemps, min, max)();
-    } else {
-      alert("Спасибо за игру, еще увидимся!");
-    }
-  };
-};
-const foo = gameBot(10, 0, 10);
-foo();
+//Вложенность селекторов ("hgroup>.head"), если просто внутри ("hgroup .head")
+// const head = document.querySelectorAll("hgroup>.head");
+// console.log(head);
