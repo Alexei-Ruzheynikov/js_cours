@@ -1,112 +1,88 @@
 "use strict";
-console.time("1");
-let date = new Date();
-var day = date.getDay();
-var elem = document.getElementById("elem");
-var elemTo = document.getElementById("elemTo");
 
-function showDay(day) {
-  var days = [
-    "воскресенье",
-    "понедельник",
-    "вторник",
-    "среда",
-    "четверг",
-    "пятница",
-    "суббота",
-  ];
-  return days[day];
-}
-function monthName(num) {
-  var month = [
-    "января",
-    "февраля",
-    "марта",
-    "апреля",
-    "мая",
-    "июня",
-    "июля",
-    "августа",
-    "сентября",
-    "октября",
-    "ноября",
-    "декабря",
-  ];
-  return month[num];
-}
-function showHours() {
-  switch (date.getHours()) {
-    case 1:
-    case 21:
-      return date.getHours() + " час ";
-    case 2:
-    case 3:
-    case 4:
-    case 22:
-    case 23:
-      return date.getHours() + " часа ";
-    default:
-      return date.getHours() + " часов ";
-  }
-}
+const collections = document.querySelectorAll(".collection"),
+  elems = document.querySelectorAll(".elem"),
+  secondHead = document.getElementById("second-head");
 
-function showTime(time, interval) {
-  if (time == 1 || time == 21 || time == 31 || time == 41 || time == 51) {
-    return time + " " + interval + "а ";
-  } else if (
-    (time >= 2 && time <= 4) ||
-    (time >= 22 && time <= 24) ||
-    (time >= 32 && time <= 34) ||
-    (time >= 42 && time <= 44) ||
-    (time >= 52 && time <= 54)
-  ) {
-    return time + " " + interval + "ы ";
-  } else {
-    return time + " " + interval + " ";
-  }
-}
+console.log(collections);
+console.log(elems);
 
-function getZero(num) {
-  if (num > 0 && num < 10) {
-    return "0" + num;
-  } else {
-    return num;
-  }
-}
+//remove() - удаляет элемент в DOM дереве, но оставляет в переменной
+// elems[3].remove();
+// elems[1].remove();
 
-function oneTask() {
-  date = new Date();
-  elem.innerHTML =
-    "Сегодня " +
-    showDay(day) +
-    ", " +
-    date.getDate() +
-    " " +
-    monthName(date.getMonth()) +
-    " " +
-    date.getFullYear() +
-    " год " +
-    showHours() +
-    showTime(date.getMinutes(), "минут") +
-    showTime(date.getSeconds(), "секунд");
-}
+//append - берет и перемещает элементы где бы они не были, вставляет элемент в конец родителя
+// collections[1].append(elems[3]);
+// collections[1].append(elems[1]);
 
-function twoTask() {
-  date = new Date();
-  elemTo.innerHTML =
-    getZero(date.getHours()) +
-    ":" +
-    getZero(date.getMinutes()) +
-    ":" +
-    getZero(date.getSeconds()) +
-    " " +
-    getZero(date.getDate()) +
-    "." +
-    getZero(date.getMonth() + 1) +
-    "." +
-    date.getFullYear();
-}
+//prepend - аналог append, только вставляет вначало родителя
+// collections[1].prepend(elems[5]);
 
-window.setInterval(oneTask, 1000);
-window.setInterval(twoTask, 1000);
-console.timeEnd("1");
+// before правую коллекцию вставляет перед левой коллекцией
+// collection[0].before(collections[1]);
+
+// after - вставляет элемент справа(elems[0]) после элемента слева(elems[4])
+// elems[4].after(elems[0]);
+
+// replaceWith убирает левый элемент и вставляет на его место правый элемент
+// elems[2].replaceWith(elems[3]);
+
+//cloneNode - делает копию элемента - только его тэга, с атрибутом true в скобках - копирует все ноды
+// const elemClone = elems[3].cloneNode(true);
+//Добавляем новый класс нашему клону
+// elemClone.classList.add("newElem");
+// Добавляем новое значения контенту нашего элемента
+// elemClone.textContent = "new elem";
+// collections[1].append(elemClone);
+
+//задаем  и получаем контент элемента
+// elems[4].textContent = "Привет";
+//innerHTML - позволяет использовать тэги
+// elems[2].innerHTML = "<b>Привет</b>";
+// console.log(elems[4].textContent);
+
+//createElement - создаем элемент тэг
+// const newElem = document.createElement("li");
+// newElem.textContent = "Новый элемент";
+// newElem.classList.add("new_elem");
+
+// collections[1].append(newElem);
+// console.log(newElem);
+
+//
+//insertAdjacentText - добавляет текст без затирания в элемент!
+//insertAdjacentText - 1 параметр - место куда хотим вставить(4 варианта), 2 параметр - добавляемый текст; beforebegin - вставляет до элемента, afterend - после элемента, afterbegin - перед текстом элемента, beforeend - после текста элемента
+// secondHead.insertAdjacentText("beforebegin", "beforebegin");
+// secondHead.insertAdjacentText("afterend", "afterend");
+// secondHead.insertAdjacentText("afterbegin", "afterbegin");
+// secondHead.insertAdjacentText("beforeend", "beforeend");
+
+// insertAdjacentElement вставляет как прошлый метод, только элементы, а не текст
+// secondHead.insertAdjacentElement("beforebegin", elems[1]);
+// secondHead.insertAdjacentElement("afterend", elems[2]);
+// secondHead.insertAdjacentElement("afterbegin", elems[3]);
+// secondHead.insertAdjacentElement("beforeend", elems[4]);
+
+// И этот способ добавляет тэги с текстом
+// secondHead.insertAdjacentHTML("beforebegin", "<h3>beforebegin</h3>");
+// secondHead.insertAdjacentHTML("afterend", "<h3>afterend</h3>");
+// secondHead.insertAdjacentHTML("afterbegin", "<h3>afterbegin</h3>");
+// secondHead.insertAdjacentHTML("beforeend", "<h3>beforeend</h3>");
+
+//
+//
+
+//Устаревшие методы, которыми лучше не пользоваться, но знать как работают надо
+const newElem = document.createElement("li");
+newElem.textContent = "Новый элемент";
+newElem.classList.add("new_elem");
+
+// collections[1].appendChild(elems[3]); //append
+
+// collections[0].insertBefore(newElem, elem[4]); // before
+
+// collections[0].insertBefore(elems[5], collections[0].firstChild); // prepend
+
+// collections[0].replaceChild(newElem, elems[4]); //replaceWith
+
+// collections[0].removeChild(elems[2]); //remove
