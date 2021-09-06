@@ -1,88 +1,115 @@
 "use strict";
 
-const collections = document.querySelectorAll(".collection"),
-  elems = document.querySelectorAll(".elem"),
-  secondHead = document.getElementById("second-head");
+// let square = document.querySelector(".square");
+// console.dir(square);
+// let count = 0;
 
-console.log(collections);
-console.log(elems);
+// square.onclick = function () {
+//   if (count === 3) {
+//     console.log("Опачки");
+//     square.onclick = null;
+//     return;
+//   }
+//   count++;
+//   console.log("Вы кликнули на квадрат");
+// };
 
-//remove() - удаляет элемент в DOM дереве, но оставляет в переменной
-// elems[3].remove();
-// elems[1].remove();
+// square.onclick = function () {
+//   console.log("Это 2 функция");
+// };
 
-//append - берет и перемещает элементы где бы они не были, вставляет элемент в конец родителя
-// collections[1].append(elems[3]);
-// collections[1].append(elems[1]);
+// let clicked = function () {
+//   count++;
+//   if (count === 3) square.removeEventListener("click", clicked);
+//   console.log("Произошел клик по квадрату");
+// };
 
-//prepend - аналог append, только вставляет вначало родителя
-// collections[1].prepend(elems[5]);
+// square.addEventListener("click", clicked);
 
-// before правую коллекцию вставляет перед левой коллекцией
-// collection[0].before(collections[1]);
-
-// after - вставляет элемент справа(elems[0]) после элемента слева(elems[4])
-// elems[4].after(elems[0]);
-
-// replaceWith убирает левый элемент и вставляет на его место правый элемент
-// elems[2].replaceWith(elems[3]);
-
-//cloneNode - делает копию элемента - только его тэга, с атрибутом true в скобках - копирует все ноды
-// const elemClone = elems[3].cloneNode(true);
-//Добавляем новый класс нашему клону
-// elemClone.classList.add("newElem");
-// Добавляем новое значения контенту нашего элемента
-// elemClone.textContent = "new elem";
-// collections[1].append(elemClone);
-
-//задаем  и получаем контент элемента
-// elems[4].textContent = "Привет";
-//innerHTML - позволяет использовать тэги
-// elems[2].innerHTML = "<b>Привет</b>";
-// console.log(elems[4].textContent);
-
-//createElement - создаем элемент тэг
-// const newElem = document.createElement("li");
-// newElem.textContent = "Новый элемент";
-// newElem.classList.add("new_elem");
-
-// collections[1].append(newElem);
-// console.log(newElem);
-
-//
-//insertAdjacentText - добавляет текст без затирания в элемент!
-//insertAdjacentText - 1 параметр - место куда хотим вставить(4 варианта), 2 параметр - добавляемый текст; beforebegin - вставляет до элемента, afterend - после элемента, afterbegin - перед текстом элемента, beforeend - после текста элемента
-// secondHead.insertAdjacentText("beforebegin", "beforebegin");
-// secondHead.insertAdjacentText("afterend", "afterend");
-// secondHead.insertAdjacentText("afterbegin", "afterbegin");
-// secondHead.insertAdjacentText("beforeend", "beforeend");
-
-// insertAdjacentElement вставляет как прошлый метод, только элементы, а не текст
-// secondHead.insertAdjacentElement("beforebegin", elems[1]);
-// secondHead.insertAdjacentElement("afterend", elems[2]);
-// secondHead.insertAdjacentElement("afterbegin", elems[3]);
-// secondHead.insertAdjacentElement("beforeend", elems[4]);
-
-// И этот способ добавляет тэги с текстом
-// secondHead.insertAdjacentHTML("beforebegin", "<h3>beforebegin</h3>");
-// secondHead.insertAdjacentHTML("afterend", "<h3>afterend</h3>");
-// secondHead.insertAdjacentHTML("afterbegin", "<h3>afterbegin</h3>");
-// secondHead.insertAdjacentHTML("beforeend", "<h3>beforeend</h3>");
+// square.addEventListener("click", function () {
+//   console.log("Произошел клик по квадрату 2 ");
+// });
+// square.addEventListener("click", function () {
+//   console.log("Произошел клик по квадрату 3");
+// });
 
 //
 //
 
-//Устаревшие методы, которыми лучше не пользоваться, но знать как работают надо
-const newElem = document.createElement("li");
-newElem.textContent = "Новый элемент";
-newElem.classList.add("new_elem");
+// let square = document.querySelector(".square");
 
-// collections[1].appendChild(elems[3]); //append
+// let eventFunc = function (event) {
+//   console.log(event.type);
+// };
 
-// collections[0].insertBefore(newElem, elem[4]); // before
+// square.addEventListener("click", eventFunc);
 
-// collections[0].insertBefore(elems[5], collections[0].firstChild); // prepend
+//mouseup - при нажатии мышки, когда отпускаешь ее
+// square.addEventListener("mouseup", eventFunc);
+//mousedown -нажимаем кнопку мыши но не отпускаем на объекте
+// square.addEventListener("mousedown", eventFunc);
+//mousemove - событие наведение на объект
+// square.addEventListener("mousemove", eventFunc);
 
-// collections[0].replaceChild(newElem, elems[4]); //replaceWith
+//mouseenter - когда мышку заводим на наш объект
+// square.addEventListener("mouseenter", eventFunc);
+//mouseleave - когда мышку уводим с объекта
+// square.addEventListener("mouseleave", eventFunc);
+//mouseover -  сраатывае при наведении на внутренний элемент какого-либо объекта
+// square.addEventListener("mouseover", eventFunc);
+//mouseout - сраатывае при уходе с элемента и его дочерних элементов какого-либо объекта
+// square.addEventListener("mouseout", eventFunc);
 
-// collections[0].removeChild(elems[2]); //remove
+//
+//
+//DOMContentLoaded когда страница загружена запускает скрипты, обычно оборачивают весь код js в эту конструкцию
+// document.addEventListener("DOMContentLoaded", function () {
+//   console.log("Страница загрузилась");
+// });
+
+// let eventFunc = function (event) {
+//   console.log(event.type);
+//   console.log(event.target.value);
+// };
+//input - когда меняем value у input
+// document.querySelector("#text").addEventListener("input", eventFunc);
+//change - срабатывает, когда после ввода в input убираем фокус(кликаем в другом мместе кроме inputа)
+// keyup - отпускаем кнопку
+// document.querySelector("#text").addEventListener("keyup", eventFunc);
+//keydown - нажимаем кнопку
+// document.querySelector("#text").addEventListener("keydown", eventFunc);
+//focus - когда кликаем на элементи  у нас появляется возможность вводить текст
+// document.querySelector("#text").addEventListener("focus", eventFunc);
+//blur - когда теряем фокус
+// document.querySelector("#text").addEventListener("blur", eventFunc);
+//change - при изменении значения отрабатывает change для type range
+// document.querySelector("#range").addEventListener("change", eventFunc);
+
+// document.querySelector("#link").addEventListener("click", function (event) {
+//   //preventDefault - отменяет стандартное поведение
+//   event.preventDefault();
+//   console.log("click");
+// });
+
+//
+//
+//contextmenu - отменяет меню при клике правой кнопки мыши - можем создать свое!
+// document.addEventListener("contextmenu", function (event) {
+//   //preventDefault - отменяет стандартное поведение
+//   event.preventDefault();
+//   console.log("click");
+// });
+
+let clickElem = null;
+function greenHundler(event) {
+  if (clickElem) {
+    clickElem.classList.remove("green");
+  }
+  clickElem = event.currentTarget;
+  clickElem.classList.add("green");
+}
+//всплытие, а захват событие - пишем еще true
+document
+  .querySelector(".event_btn")
+  .addEventListener("click", greenHundler, true);
+document.querySelector("body").addEventListener("click", greenHundler, true);

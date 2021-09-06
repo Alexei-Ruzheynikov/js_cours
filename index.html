@@ -12,25 +12,26 @@
       crossorigin
     />
     <link rel="stylesheet" href="css/style.min.css" />
-    <title>10-lecture</title>
+    <title>11-lecture</title>
     <style>
-      html {
-        margin-left: 200px;
+      .square {
+        margin-top: 20px;
+        width: 200px;
+        height: 200px;
+        background-color: red;
+      }
+      .green {
+        background-color: green;
       }
     </style>
   </head>
   <body>
-    <h2 class="head" id="second-head">_Document Object Model_</h2>
-    <ul class="collection">
-      <li class="elem elem00">elem00</li>
-      <li class="elem elem01">elem01</li>
-      <li class="elem elem02">elem02</li>
-      <li class="elem elem03">elem03</li>
-      <li class="elem elem04">elem04</li>
-      <li class="elem elem05">elem05</li>
-    </ul>
-    <br />
-    <ol class="collection"></ol>
+    <input type="range" name="range" id="range" min="0" max="5" />
+    <input type="text" id="text" placeholder="Hello" />
+    <a id="link" href="https://google.com" target="_blank">Google</a>
+    <button id="button">hi</button>
+    <button class="event_btn">Кнопка</button>
+    <div class="square"></div>
     <script src="script.js" defer></script>
   </body>
 </html>
