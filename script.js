@@ -78,7 +78,11 @@ let appData = {
   addExpensesBlock: function () {
     let cloneExpensesItem = expensesItems[0].cloneNode(true);
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+    cloneExpensesItem.querySelectorAll("input").forEach(function (elem) {
+      elem.value = "";
+    });
     expensesItems = document.querySelectorAll(".expenses-items");
+    // appData.getValidateTextInput();
     if (expensesItems.length === 3) {
       expensesPlus.style.display = "none";
     }
@@ -86,11 +90,24 @@ let appData = {
   addIncomeBlock: function () {
     let cloneIncomeItem = incomeItems[0].cloneNode(true);
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
+    cloneIncomeItem.querySelectorAll("input").forEach(function (elem) {
+      elem.value = "";
+    });
     incomeItems = document.querySelectorAll(".income-items");
+    // appData.getValidateTextInput();
     if (incomeItems.length === 3) {
       incomePlus.style.display = "none";
     }
   },
+  // getValidateText: function () {
+  //   let textInputs = document.querySelectorAll('[placeholder="Наименование"]');
+  //   textInputs.forEach(function (element) {
+  //     element.addEventListener("input", function () {
+  //       element.value = element.value.replace(/[^А-я-\s\,\?\.\!]/, "");
+  //       console.log("element.value", element.value);
+  //     });
+  //   });
+  // },
   getExpenses: function () {
     expensesItems.forEach(function (item) {
       let itemExpenses = item.querySelector(".expenses-title").value;
