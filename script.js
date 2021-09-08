@@ -1,6 +1,7 @@
 // "use strict";
 
 let start = document.getElementById("start"),
+  reset = document.getElementById("cancel"),
   btnPlus = document.getElementsByTagName("button"),
   incomePlus = btnPlus[0],
   expensesPlus = btnPlus[1],
@@ -26,7 +27,9 @@ let start = document.getElementById("start"),
   periodSelect = document.querySelector(".period-select"),
   additionalExpensesItem = document.querySelector(".additional_expenses-item"),
   targetAmount = document.querySelector(".target-amount"),
-  incomeItems = document.querySelectorAll(".income-items");
+  incomeItems = document.querySelectorAll(".income-items"),
+  allInputs = document.querySelectorAll("input"),
+  texxtInputs = document.querySelectorAll("input[type=text]");
 
 //Если это число - true, если не число - false; isFinite - число конечное?-true, бесконечное - false
 // Проверка что число !isNumber
@@ -53,14 +56,15 @@ let appData = {
   expensesMonth: 0,
   start: function () {
     appData.budget = +salaryAmount.value;
-    appData.getExpenses();
-    appData.getIncome();
-    appData.getExpensesMonth();
-    appData.getAddExpenses();
-    appData.getAddIncome();
-    appData.getBudget();
 
-    appData.showResult();
+    this.getExpenses();
+    this.getIncome();
+    this.getExpensesMonth();
+    this.getAddExpenses();
+    this.getAddIncome();
+    this.getBudget();
+
+    this.showResult();
   },
   showResult: function () {
     budgetMonthValue.value = appData.budgetMonth;
@@ -70,7 +74,7 @@ let appData = {
     additionalIncomeValue.value = appData.addIncome.join(", ");
     targetMonthValue.value = Math.ceil(appData.getTargetMonth());
     incomePeriodValue.value = appData.calcPeriod();
-
+    // console.log(this);
     periodSelect.addEventListener("input", function () {
       incomePeriodValue.value = appData.calcPeriod();
     });
@@ -79,6 +83,8 @@ let appData = {
     let cloneExpensesItem = expensesItems[0].cloneNode(true);
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
     expensesItems = document.querySelectorAll(".expenses-items");
+    textInputs = document.querySelectorAll("input[type=text]");
+    allInputs = document.querySelectorAll("input");
     if (expensesItems.length === 3) {
       expensesPlus.style.display = "none";
     }
@@ -194,7 +200,7 @@ let appData = {
   },
 };
 
-start.addEventListener("click", appData.start);
+start.addEventListener("click", appData.start.bind(appData));
 
 expensesPlus.addEventListener("click", appData.addExpensesBlock);
 incomePlus.addEventListener("click", appData.addIncomeBlock);
