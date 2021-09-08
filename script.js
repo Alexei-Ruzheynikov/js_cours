@@ -1,6 +1,7 @@
 // "use strict";
 
 let start = document.getElementById("start"),
+  reset = document.getElementById("cancel"),
   btnPlus = document.getElementsByTagName("button"),
   incomePlus = btnPlus[0],
   expensesPlus = btnPlus[1],
@@ -26,7 +27,10 @@ let start = document.getElementById("start"),
   periodSelect = document.querySelector(".period-select"),
   additionalExpensesItem = document.querySelector(".additional_expenses-item"),
   targetAmount = document.querySelector(".target-amount"),
-  incomeItems = document.querySelectorAll(".income-items");
+  incomeItems = document.querySelectorAll(".income-items"),
+  allInputs = document.querySelectorAll("input"),
+  textInputs = document.querySelectorAll("input[type=text]"),
+  periodAmount = document.querySelector(".period-amount");
 
 //Если это число - true, если не число - false; isFinite - число конечное?-true, бесконечное - false
 // Проверка что число !isNumber
@@ -53,14 +57,41 @@ let appData = {
   expensesMonth: 0,
   start: function () {
     appData.budget = +salaryAmount.value;
-    appData.getExpenses();
-    appData.getIncome();
-    appData.getExpensesMonth();
-    appData.getAddExpenses();
-    appData.getAddIncome();
-    appData.getBudget();
+    this.getExpenses();
+    this.getIncome();
+    this.getExpensesMonth();
+    this.getAddExpenses();
+    this.getAddIncome();
+    this.getBudget();
 
-    appData.showResult();
+    this.showResult();
+    this.getBlockInputs();
+  },
+  reset: function () {
+    this.getUnblockInputs();
+    allInputs.forEach(function (allInput) {
+      allInput.value = "";
+    });
+    periodSelect.value = 1;
+    periodAmount.textContent = 1;
+    budgetDayValue.value = "";
+    budgetMonthValue.value = "";
+    expensesMonthValue.value = "";
+    additionalIncomeValue.value = "";
+    additionalExpensesValue.value = "";
+    incomePeriodValue.value = "";
+    targetMonthValue.value = "";
+
+    appData.budgetMonth = 0;
+    appData.budgetDay = 0;
+    appData.expensesMonth = 0;
+    appData.addIncome = [];
+    appData.addExpenses = [];
+    appData.income = {};
+    appData.expenses = {};
+    appData.removeNewItems();
+    incomePlus.style.display = "block";
+    expensesPlus.style.display = "block";
   },
   showResult: function () {
     budgetMonthValue.value = appData.budgetMonth;
@@ -209,10 +240,42 @@ let appData = {
   calcPeriod: function () {
     return appData.budgetMonth * periodSelect.value;
   },
+  getBlockInputs: function () {
+    textInputs.forEach(function (textInput) {
+      textInput.disabled = true;
+    });
+    incomePlus.disabled = true;
+    expensesPlus.disabled = true;
+    start.style.display = "none";
+    reset.style.display = "block";
+  },
+  getUnblockInputs: function () {
+    allInputs.forEach(function (allInput) {
+      allInput.disabled = false;
+    });
+    incomePlus.disabled = false;
+    expensesPlus.disabled = false;
+    start.style.display = "block";
+    reset.style.display = "none";
+  },
+  removeNewItems: function () {
+    let newExpensesItems = document.querySelectorAll(".expenses-items");
+    let newIncomeItems = document.querySelectorAll(".income-items");
+    if (newExpensesItems.length > 1) {
+      for (let i = 1; i < newExpensesItems.length; i++) {
+        newExpensesItems[i].remove();
+      }
+    }
+    if (newIncomeItems.length > 1) {
+      for (let i = 1; i < newIncomeItems.length; i++) {
+        newIncomeItems[i].remove();
+      }
+    }
+  },
 };
 
-start.addEventListener("click", appData.start);
-
+start.addEventListener("click", appData.start.bind(appData));
+reset.addEventListener("click", appData.reset.bind(appData));
 expensesPlus.addEventListener("click", appData.addExpensesBlock);
 incomePlus.addEventListener("click", appData.addIncomeBlock);
 
@@ -231,7 +294,7 @@ incomePlus.addEventListener("click", appData.addIncomeBlock);
 // progFile(appData);
 let eventFunc = function (event) {
   let eventValue = event.target.value;
-  let periodAmount = document.querySelector(".period-amount");
+
   periodAmount.innerHTML = eventValue;
 };
 document.querySelector(".period-select").addEventListener("input", eventFunc);
