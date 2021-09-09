@@ -1,82 +1,51 @@
 "use strict";
 
-// //Миксины
-// {
-//   const obj = {
-//     name: "Василий",
-//     goWork: function () {
-//       console.log(this.name + " пошел на работу");
-//     },
-//     goHome: function () {
-//       console.log(this.name + " пошел домой");
-//     },
-//   };
+const buttonSignup = document.querySelector(".button-signup");
+const buttonSignin = document.querySelector(".button-signin");
+const userListItems = document.querySelector(".user-list");
+const greetingBlock = document.querySelector(".greeting-block");
 
-//   const goRelax = function () {
-//     console.log(this.name + " пошел отдыхать");
-//   };
+let userList = [];
 
-//   const nameWife = "Жанна";
+function User(name, surname, regdate, login, password) {
+  this.userName = name;
+  this.userSurname = surname;
+  this.regDate = regdate;
+  this.login = login;
+  this.password = password;
+}
 
-//   const nameSon = "Лионель";
-//   const nameDauhter = "Августина";
+const deleteItemByValue = function (Arr, val) {
+  Arr.forEach((el, ind) => {
+    if (el.login === val) Arr.splice(ind, 1);
+  });
+};
 
-//   // Так добавляются новые свойства в объект, называется -миксины
-//   Object.assign(obj, { goRelax, nameWife }, { nameSon, nameDauhter });
-//   console.log(obj);
-// }
-
-// //Декоратор
-// {
-//   const mixinCalcCost = function (obj) {
-//     obj.quantity = obj.quantity || 0;
-//     obj.calcCost = function (price) {
-//       obj.price = price;
-//       return price * obj.quantity;
-//     };
-//   };
-
-//   const arr = [
-//     {
-//       name: "Шорты",
-//       quantity: 10,
-//     },
-//     {
-//       name: "Носки",
-//       quantity: 20,
-//     },
-//     {
-//       name: "Тапки",
-//     },
-//   ];
-//   // mixinCalcCost(arr[0]);
-//   // console.log(arr);
-
-//   arr.forEach(mixinCalcCost);
-
-//   console.log(arr[0].calcCost(50));
-//   console.log(arr[1].calcCost(10));
-//   console.log(arr[2].calcCost(50));
-// }
-// {
-//   const wrapper = function (fn) {
-//     console.log("Оборачиваем функцию: ", fn.name);
-//     return function () {
-//       const args = Array.from(arguments);
-//       console.log("Вызов обертки для: ", fn.name);
-//       console.log("Аргументы:", args);
-//       const result = fn.apply(null, args);
-//       console.log("Результат выполнения функции", fn.name, result);
-//       return result;
-//     };
-//   };
-//   const foo = function (a, b) {
-//     return a + b;
-//   };
-//   const bar = wrapper(foo);
-//   console.log(bar(5, 15));
-// }
-
-//
-//
-//
+const render = function () {
+  getDataFromLocalStorage();
+  userListItems.textContent = "";
+  userList.forEach((item) => {
+    const li = document.createElement("li");
+    li.dataset.userLogin = item.login;
+    li.classList.add("user-list-item");
+    li.innerHTML = `<span class='user-info user-name'>Имя
+    <span class='user-info user-name'>${item.userName}</span>,
+    фамилия:
+    <span class='user-info user-surname'>${item.userSurname}</span>,
+    зарегистрирован:
+    <span class='user-info user-tegdate'>${item.regDate}</span>
+    </span>
+    <button class='user-remove'></button>
+    `;
+    userListItems.append(li);
+    const userRemove = li.querySelector(".user-remove");
+    userRRemove.addEventListener("click", (e) => {
+      let parent = e.target.parentNode;
+      let valueTodelete = parent.dataset.userLogin;
+      debugger;
+      deleteItemByValue(userList, valueToDelete);
+      sendDataToLocalStorage();
+      render();
+    });
+  });
+};
