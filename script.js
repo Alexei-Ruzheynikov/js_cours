@@ -1,57 +1,79 @@
 "use strict";
 
-// 6 урок важный
+const list = document.querySelector(".list");
+// const items = document.getElementsByClassName("list-item");
+const items = document.querySelectorAll(".list-item");
 
-//Что такое магические числа?
+items.forEach(function (elem) {
+  elem.addEventListener("click", function () {
+    this.style.color = "red";
+  });
+});
 
-//Решение 5 усложненного задания
-// const START = 0;
-// const END = 100;
-
-// function checkPrime(num) {
-//   for (let i = 2; i < num; i++) {
-//     if (num % i === 0) {
-//       return false;
-//     }
-//   }
-//   if (num > 1) return true;
-// }
-
-// function getPrimeNum(start, end) {
-//   for (let i = start; i <= end; i++) {
-//     if (checkPrime(i)) {
-//       console.log("Число " + i + " простое и его делители 1 и " + i);
-//     }
-//   }
-// }
-// getPrimeNum(START, END);
-
-//Задача 2
-// function foo(x) {
-//   debugger;
-//   if (x < 0) return;
-//   console.log("begin: " + x);
-//   foo(x - 1);
-//   console.log("end: " + x);
-// }
-// foo(5);
-
-//Задача 3
-// function fact(x) {
-//   if (x === 0) return 1;
-//   return x * fact(x - 1);
-// }
-// console.log(fact(5));
-
-const logger = function (fn) {
-  return function () {
-    const args = Array.from(arguments);
-    const res = fn.apply(null, args);
-  };
+const students = {
+  people: [
+    {
+      name: "Петр",
+      surname: "Петров",
+      age: 42,
+    },
+    {
+      name: "Александр",
+      surname: "Александров",
+      age: 22,
+    },
+    {
+      name: "Иван",
+      surname: "Иванов",
+      age: 32,
+    },
+  ],
+  study() {
+    this.people.forEach(function (item) {
+      console.log(item.surname);
+    });
+    console.log("Прошел 1:20");
+    console.log(this);
+    const _this = this;
+    this.people.forEach(function (item) {
+      _this.eat(item);
+    });
+  },
+  eat(human) {
+    console.log(human.name + " пошел в столовую");
+  },
 };
+students.study();
 
-const bar = logger();
-bar(1, 2, 3, 4, 5);
-// console.log("bar: ", bar);
+//
+//
+//
 
-//Какие параметры принимает foreach кроме callback функций?
+// const form = document.forms.form;
+// form.addEventListener("submit", function (e) {
+//   e.preventDefault();
+//   const newLi = document.createElement("li");
+//   newLi.textContent = form.text.value;
+//   newLi.classList.add("list-item");
+//   list.append(newLi);
+//   form.reset();
+//   // console.log(items);
+// });
+
+// });
+// console.log([...items]);
+
+//
+//
+//
+
+// const arr = [1, 2, 3];
+// const arr2 = arr;
+// const arr3 = [...arr];
+
+// arr.push(4);
+// arr3.push(10);
+// arr2.push(5);
+// console.log(arr);
+// console.log(arr2);
+// console.log(arr3);
