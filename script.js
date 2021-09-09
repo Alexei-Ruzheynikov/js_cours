@@ -1,79 +1,82 @@
 "use strict";
 
-const list = document.querySelector(".list");
-// const items = document.getElementsByClassName("list-item");
-const items = document.querySelectorAll(".list-item");
+// //Миксины
+// {
+//   const obj = {
+//     name: "Василий",
+//     goWork: function () {
+//       console.log(this.name + " пошел на работу");
+//     },
+//     goHome: function () {
+//       console.log(this.name + " пошел домой");
+//     },
+//   };
 
-items.forEach(function (elem) {
-  elem.addEventListener("click", function () {
-    this.style.color = "red";
-  });
-});
+//   const goRelax = function () {
+//     console.log(this.name + " пошел отдыхать");
+//   };
 
-const students = {
-  people: [
-    {
-      name: "Петр",
-      surname: "Петров",
-      age: 42,
-    },
-    {
-      name: "Александр",
-      surname: "Александров",
-      age: 22,
-    },
-    {
-      name: "Иван",
-      surname: "Иванов",
-      age: 32,
-    },
-  ],
-  study() {
-    this.people.forEach(function (item) {
-      console.log(item.surname);
-    });
-    console.log("Прошел 1:20");
-    console.log(this);
-    const _this = this;
-    this.people.forEach(function (item) {
-      _this.eat(item);
-    });
-  },
-  eat(human) {
-    console.log(human.name + " пошел в столовую");
-  },
-};
-students.study();
+//   const nameWife = "Жанна";
+
+//   const nameSon = "Лионель";
+//   const nameDauhter = "Августина";
+
+//   // Так добавляются новые свойства в объект, называется -миксины
+//   Object.assign(obj, { goRelax, nameWife }, { nameSon, nameDauhter });
+//   console.log(obj);
+// }
+
+// //Декоратор
+// {
+//   const mixinCalcCost = function (obj) {
+//     obj.quantity = obj.quantity || 0;
+//     obj.calcCost = function (price) {
+//       obj.price = price;
+//       return price * obj.quantity;
+//     };
+//   };
+
+//   const arr = [
+//     {
+//       name: "Шорты",
+//       quantity: 10,
+//     },
+//     {
+//       name: "Носки",
+//       quantity: 20,
+//     },
+//     {
+//       name: "Тапки",
+//     },
+//   ];
+//   // mixinCalcCost(arr[0]);
+//   // console.log(arr);
+
+//   arr.forEach(mixinCalcCost);
+
+//   console.log(arr[0].calcCost(50));
+//   console.log(arr[1].calcCost(10));
+//   console.log(arr[2].calcCost(50));
+// }
+// {
+//   const wrapper = function (fn) {
+//     console.log("Оборачиваем функцию: ", fn.name);
+//     return function () {
+//       const args = Array.from(arguments);
+//       console.log("Вызов обертки для: ", fn.name);
+//       console.log("Аргументы:", args);
+//       const result = fn.apply(null, args);
+//       console.log("Результат выполнения функции", fn.name, result);
+//       return result;
+//     };
+//   };
+//   const foo = function (a, b) {
+//     return a + b;
+//   };
+//   const bar = wrapper(foo);
+//   console.log(bar(5, 15));
+// }
 
 //
 //
 //
-
-// const form = document.forms.form;
-// form.addEventListener("submit", function (e) {
-//   e.preventDefault();
-//   const newLi = document.createElement("li");
-//   newLi.textContent = form.text.value;
-//   newLi.classList.add("list-item");
-//   list.append(newLi);
-//   form.reset();
-//   // console.log(items);
-// });
-
-// });
-// console.log([...items]);
-
-//
-//
-//
-
-// const arr = [1, 2, 3];
-// const arr2 = arr;
-// const arr3 = [...arr];
-
-// arr.push(4);
-// arr3.push(10);
-// arr2.push(5);
-// console.log(arr);
-// console.log(arr2);
-// console.log(arr3);
