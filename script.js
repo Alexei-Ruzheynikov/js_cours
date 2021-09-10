@@ -1,117 +1,194 @@
-// "use strict";
+"use strict";
 
-// let arr = [1, , 2, 3, 4, 5];
-// console.log(arr.__proto__);
-// console.log(Array.prototype);
+// es5 - старый стандарт
+// ecmaScript2015 = es6.(новый стандарт, оптимизированный es5)
 
-// let car = {
-//   doors: 4,
-//   turbocharging: false,
-//   ride: function () {
-//     console.log("Машина едет");
+// console.log(n);
+// var n = 5;
+// console.log(n);
+
+// console.log(n);
+// let n = 5;
+
+//
+//
+//
+
+// const name = "Alex",
+//   age = 30;
+
+// const str =
+//   "<h1>Hello</h1> \n" +
+//   "<div>" +
+//   name +
+//   "</div> \n" +
+//   "<div>" +
+//   (age + 1) +
+//   "</div>";
+// console.log(str);
+// //Современный стандарт - обратные кавычки
+// const newStr = `<h1>Hello</h1>
+// <div>${name}</div>
+// <div>${age + 1}</div>`;
+// console.log(newStr);
+
+//
+//
+//
+
+// В es6 можно задать параметры по умолчанию в функцию, чаще всего параметры со значением по умолчанию прописывают в конце
+// const createHome = function (wall = 2, doors = 3, window = 6) {
+//   console.log(`Дом имеет:
+//   стен: ${wall},
+//   двери: ${doors},
+//   окна: ${window}
+//   `);
+// };
+// createHome();
+
+// стрелочная функция в es6
+// const sum = (a, b) => {
+//   return a + b;
+// };
+// console.log("sum(2, 3) ", sum(2, 3));
+
+//стрелочная функция с объектом
+
+// const sum = (a, b) => ({
+//   a: a,
+//   b: b,
+//   sum: a + b,
+// });
+// console.log(sum(2, 4));
+
+//
+//
+
+// const p = document.querySelectorAll("p");
+// p.forEach((e) => {
+//   console.log(e);
+// });
+
+// const p = document.querySelector("p");
+// p.addEventListener("click", () => {
+//   console.log("hi");
+// });
+
+//ЕЩЕ РАЗ ПОСМОТРЕТЬ ЧТО ТАКОЕ КОНТЕКСТ ВЫЗОВА
+
+// const Human = function (firstName, lastName, age) {
+//   this.firstName = firstName;
+//   this.lastName = lastName;
+//   this.age = age;
+// };
+// const newHuman = new Human("John", "Wick", 46);
+// console.log(newHuman);
+
+// Стрелочные функции рекомендуется использовать везде где не нужен контекст вызова
+
+//
+//
+//
+//defineProperty, геттеры, сеттеры
+
+// const mazda = {
+//   model: 3,
+//   year: 2006,
+//   brand: "x7",
+//   get fullTitle() {
+//     return this.brand + " " + this.model;
+//   },
+//   set fullTitle(value) {
+//     this.brand = value;
 //   },
 // };
-// let newCar = Object.create(car);
-// console.log("newCar: ", newCar);
-// newCar.model = "mazde 3";
-// console.log(newCar.doors);
-
-//hasOwnProperty - проверяет есть ли свойства у наследника в данный момент
-// console.log(newCar.hasOwnProperty("model"));
-// console.log(newCar.hasOwnProperty("doors"));
-
-//.__proto__.hasOwnProperty - ПРОВЕРЯЕТ СВОЙСТВА У ПРОТОТИПА (наследуемые свойства)
-// console.log(newCar.__proto__.hasOwnProperty("model"));
-// console.log(newCar.__proto__.hasOwnProperty("doors"));
-
-//isPrototypeOf - проверяет, является ли, то что в начале - прототипом для того что в скобках
-// console.log(car.isPrototypeOf(newCar));
-
+// mazda.fullTitle = "BMW";
+// console.log(mazda.fullTitle);
+// mazda.color = "blue";
 //
 //
-//
-// Если объект создан через оператор new, то this будет указывать на этот объект
-// function Car(model, color) {
-//   // this.model = "Mazda";
-//   this.model = model;
-//   this.color = color;
+
+//writeable false - запрещает дальнейшее переопределение
+// configurable false = запрещает удаление свойства
+//enumerable false - запрещает перебор в массиве
+// есть геттер(передает значение) и сеттер(задает значение)
+// Object.defineProperty(mazda, "color", {
+//   value: "blue",
+//   writable: true,
+//   configurable: true,
+//   enumerable: true,
+// });
+// for (let key in mazda) {
+//   console.log(key, mazda[kay]);
 // }
-
-// Car.prototype.ride = function () {
-//   console.log("Ехать");
-// };
-
-// let car1 = new Car("Mazda", "Red");
-// let car2 = new Car("VAZ", "black");
-
-// console.log(car1.ride === car2.ride);
-
-// car1.ride();
-
-// console.log(car1);
-// console.dir(Car);
-
-// let carTest = {
-//   model: "Mazda",
-// };
-// console.log(carTest);
-//
-//
-//
-
-// function Car(brand, model, options) {
-//   this.brand = brand;
-//   this.model = model;
-//   options = options || {};
-//   this.color = options.color;
-//   this.transmission = options.transmission;
-// }
-// Car.prototype.ride = function () {
-//   console.log(this.brand + " " + this.model + " поехала");
-// };
-
-// let car1 = new Car("mazda", "3", { color: "blue" });
-// let car2 = new Car("Bmw", "x3", { ABS: true });
-// console.log(car1);
-// console.log(car2);
-
-// //Проверяем, является ли прототип Car прототипом объекта car1
-// console.log(Car.prototype.isPrototypeOf(car1));
-// // равносильно
-// console.log(сar2 instanceof Car);
-
-// car1.ride();
-// car2.ride();
+// console.log(mazda);
 
 //
 //
 //
-//
 
-function Car(countryBuild, options) {
-  this.countryBuild = countryBuild;
-  options = options || {};
-  this.color = options.color;
-  this.transmission = options.transmission;
+// Классы в es6
+class CarWash {
+  constructor(brand, model = CarWash.noCarBaseModel(), services = []) {
+    this.brand = brand;
+    this.model = model;
+    this.washed = false;
+    this._services = services;
+  }
+
+  static noCarBaseModel() {
+    return "none";
+  }
+
+  washReady() {
+    this.washed = true;
+    CarWash.counter++;
+    this.report();
+  }
+  report() {
+    console.log(this.brand, this.model, this.washed);
+  }
+  get services() {
+    console.log(this._services);
+    return this._services.length > 0 ? "Есть доп услуги" : "Нет доп услуг";
+  }
+  set services(addServices) {
+    return this._services.push(addServices);
+  }
+}
+// super - добавляет то что нам нужно от прототипного класса
+class PassCar extends CarWash {
+  constructor(brand, model, services, pass = 5) {
+    super(brand, model, services);
+    this.pass = pass;
+  }
+  washReady() {
+    super.washReady();
+    this.reportOffice();
+  }
+  reportOffice() {
+    console.log("На мойке для легковых была помыта мышина");
+  }
 }
 
-Car.prototype.ride = function () {
-  console.log(this.brand + " " + this.model + " поехала!");
-};
+CarWash.counter = 0;
 
-function Audi(countryBuild, options, model, type) {
-  this.brand = "Audi";
-  Car.apply(this, arguments);
-  this.model = model;
-  this.type = type;
-}
+const car1 = new CarWash("mazda", 3, ["black tires", "wacks"]);
+const car2 = new PassCar("BMW", "x5");
+const car3 = new CarWash("Volvo", "s60");
+const car4 = new CarWash("ZAZ");
 
-Audi.prototype = Object.create(Car.prototype);
-Audi.prototype.constructor = Audi;
+// car1.washReady();
+// car2.washReady();
+// car3.washReady();
+// car4.washReady();
 
-let car_q7 = new Audi("germany", { color: "red" }, "Q7", "S");
+car1.services = "Протирка стекол";
 
-// console.log(car_q7);
-// console.log(car_q7 instanceof Audi);
-// console.log(car_q7 instanceof Car);
-car_q7.ride();
+console.log(car1.services);
+console.log(car2.services);
+
+console.log(CarWash.counter);
+
+console.log(car1);
+console.log(car2);
