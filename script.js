@@ -1,194 +1,248 @@
 "use strict";
 
-// es5 - старый стандарт
-// ecmaScript2015 = es6.(новый стандарт, оптимизированный es5)
-
-// console.log(n);
-// var n = 5;
-// console.log(n);
-
-// console.log(n);
-// let n = 5;
-
-//
-//
-//
-
-// const name = "Alex",
-//   age = 30;
-
-// const str =
-//   "<h1>Hello</h1> \n" +
-//   "<div>" +
-//   name +
-//   "</div> \n" +
-//   "<div>" +
-//   (age + 1) +
-//   "</div>";
-// console.log(str);
-// //Современный стандарт - обратные кавычки
-// const newStr = `<h1>Hello</h1>
-// <div>${name}</div>
-// <div>${age + 1}</div>`;
-// console.log(newStr);
-
-//
-//
-//
-
-// В es6 можно задать параметры по умолчанию в функцию, чаще всего параметры со значением по умолчанию прописывают в конце
-// const createHome = function (wall = 2, doors = 3, window = 6) {
-//   console.log(`Дом имеет:
-//   стен: ${wall},
-//   двери: ${doors},
-//   окна: ${window}
-//   `);
-// };
-// createHome();
-
-// стрелочная функция в es6
-// const sum = (a, b) => {
-//   return a + b;
-// };
-// console.log("sum(2, 3) ", sum(2, 3));
-
-//стрелочная функция с объектом
-
-// const sum = (a, b) => ({
-//   a: a,
-//   b: b,
-//   sum: a + b,
-// });
-// console.log(sum(2, 4));
-
-//
-//
-
-// const p = document.querySelectorAll("p");
-// p.forEach((e) => {
-//   console.log(e);
-// });
-
-// const p = document.querySelector("p");
-// p.addEventListener("click", () => {
-//   console.log("hi");
-// });
-
-//ЕЩЕ РАЗ ПОСМОТРЕТЬ ЧТО ТАКОЕ КОНТЕКСТ ВЫЗОВА
-
-// const Human = function (firstName, lastName, age) {
-//   this.firstName = firstName;
-//   this.lastName = lastName;
-//   this.age = age;
-// };
-// const newHuman = new Human("John", "Wick", 46);
-// console.log(newHuman);
-
-// Стрелочные функции рекомендуется использовать везде где не нужен контекст вызова
-
-//
-//
-//
-//defineProperty, геттеры, сеттеры
-
-// const mazda = {
-//   model: 3,
-//   year: 2006,
-//   brand: "x7",
-//   get fullTitle() {
-//     return this.brand + " " + this.model;
-//   },
-//   set fullTitle(value) {
-//     this.brand = value;
-//   },
-// };
-// mazda.fullTitle = "BMW";
-// console.log(mazda.fullTitle);
-// mazda.color = "blue";
-//
-//
-
-//writeable false - запрещает дальнейшее переопределение
-// configurable false = запрещает удаление свойства
-//enumerable false - запрещает перебор в массиве
-// есть геттер(передает значение) и сеттер(задает значение)
-// Object.defineProperty(mazda, "color", {
-//   value: "blue",
-//   writable: true,
-//   configurable: true,
-//   enumerable: true,
-// });
-// for (let key in mazda) {
-//   console.log(key, mazda[kay]);
+// function test() {
+//   const arg = Array.prototype.slice.call(arguments);
+//   console.log(arg);
 // }
-// console.log(mazda);
+// test("red", 5, 12, "black", [], true, 9);
+
+//...arr рест параметр - троеточие - передаем массив, рест параметр должен идти последним
+// function test(a, b, c, ...arr) {
+//   console.log(a, b, c);
+//   console.log(arr);
+// }
+// test("red", 5, 12, "black", [], true, 9);
+
+// const arr = ["red", 5, 12];
+// const arr2 = ["black", true];
+// function test(a, b, c, d, e, f) {
+//   console.log(a, b, c);
+//   console.log(d, e, f);
+// }
+// записывает массив в 1 значение
+// test(arr);
+//спред параметр записывает в каждую переменную элемент
+// test(...arr, 50, ...arr2);
+//
+//
+//с помощью спред оператора из нескольких массивов можем собрать один
+// const arr = ["red", 5, 12];
+// const arr2 = ["black", true];
+// const arr3 = [...arr, ...arr2];
+// console.log("arr3: ", arr3);
+
+//
+//
+// const allp = document.querySelectorAll("p");
+// console.log(allp);
+// const newp = [...allp];
+// console.log(newp);
+
+//
+//
+// const car = {
+//   brand: "mazda",
+//   model: 3,
+//   options: {
+//     color: "green",
+//     abs: true,
+//   },
+// };
+//старый вариант
+// const brand = car.brand;
+// const model = car.model;
+// const color = car.color;
+
+//деструктуризация объекта
+// const {
+//   brand,
+//   model,
+//   options: { color: carColor, abs: carABS },
+// } = car;
+// console.log(brand, model, carColor, carABS);
+
+// const createCar = ({
+//   brand = "bmw",
+//   model = 6,
+//   color = "black",
+//   colorInt = "white",
+// }) => {
+//   console.log(`
+//   Запущено производство автомобиля ${brand} ${model}
+//   цвет кузова: ${color}
+//   цвет салона: ${colorInt}`);
+// };
+
+// createCar({
+// brand: "mazda",
+// model: 3,
+// color: "blue",
+// colorInt: "black",
+// });
+
+//деструктуризация массива
+// const cars = ["mazda", "bmw", "audi", "mercedes-benz", "ЗИЛ"];
+// const [a, b, c] = cars;
+// console.log(a);
+// console.log(b);
+// console.log(c);
+
+//деструктуризация многомерного массива
+// const cars = [["mazda", "bmw"], ["audi", "mercedes-benz"], "ЗИЛ"];
+// const [a, b, c] = cars;
+// console.log(a);
+// console.log(b);
+// console.log(c);
+
+//деструктуризация многомерного массива - всех элементов по отдельности
+// const cars = [["mazda", "bmw"], ["audi", "mercedes-benz"], "ЗИЛ"];
+// const [[a, b], [c, d], e] = cars;
+// console.log(a);
+// console.log(b);
+// console.log(c);
+// console.log(d);
+// console.log(e);
+
+//
+//
+// const carsModel = {
+//   brand: "Volvo",
+//   models: {
+//     sedan: ["s60", "s90"],
+//     cross: ["v60", "v90"],
+//   },
+// };
+// const {
+//   models: {
+//     sedan: [s1, s2],
+//     cross: [c1, c2],
+//   },
+// } = carsModel;
+// console.log(s1, s2, c1, c2);
+
+// const car = "bentley";
+// const cycle = "bmx";
+// const bike = "honda";
+
+// const transport = {
+//   car,
+//   cycle,
+//   bike,
+//   ride() {
+//     console.log("go ride");
+//   },
+// };
+
+// console.log(transport);
+
+//
+//
+
+// const transport = {
+//   bike: "honda",
+//   car: "bentley",
+//   cycle: "bmx",
+// };
+
+// const newTransport = {
+//   bike: "suziki",
+//   quadBike: "polaris",
+// };
+
+// const newTransport2 = {
+//   bike: "Ducati",
+// };
+// //Так создаем новый объект {} - объект в куда будут записывать последующие свойства из объектов
+// const currentTransport = Object.assign(
+//   {},
+//   transport,
+//   newTransport,
+//   newTransport2
+// );
+
+// console.log(currentTransport);
+
+//
+//
+// Коллекция map и set
+
+// const obj = {
+//   a: 5,
+//   b: 10,
+// };
+// console.log(obj);
+//
+//
+//
+// const map = new Map([
+//   [2019, "auto"],
+//   ["joker", 1],
+// ]);
+// map.set("car", { brand: "mazda", model: 3 });
+// map.set(777, "три топора");
+// map.set(null, "даже так");
+// map.set(NaN, "Ух ты");
+// map.set(undefined, "неожиданно");
+// const obj = {
+//   name: "Макс",
+//   age: 30,
+// };
+// map.set(obj, 123);
+// const func = () => {
+//   console.log("Hello");
+// };
+// map.set(func, "yxx");
+// map.set(false, true);
+
+// console.log(map.get(func));
+// console.log(map.size);
+// console.log(map);
+//
+//
+// const collectMap = new Map([
+//   ["hello", "world"],
+//   ["year", 1812],
+// ]);
+// collectMap.delete("year");
+// //clear - удаляет все элементы
+// collectMap.clear();
+// const arr = Array.from(map);
+// map.forEach((value, key) => {
+//   console.log(`ключ: ${key} значение: ${value}`);
+// });
+// for ([key, value] of map) {
+//   console.log(`ключ: ${key} значение: ${value}`);
+// }
+// // console.log(arr);
+//
+//
+//
+//Коллекция содержит только уникальные значение(3 элемента, а не 5)
+// const cars = new Set();
+// cars.add("Mazda");
+// cars.add("Volvo");
+// cars.add("BMW");
+// cars.add("Volvo");
+// cars.add("BMW");
+// console.log(cars);
+// console.log(cars.size);
+// содержится ли элемент has
+// console.log(cars.has(null));
+//удаление элемента
+// cars.delete("BMW");
 
 //
 //
 //
-
-// Классы в es6
-class CarWash {
-  constructor(brand, model = CarWash.noCarBaseModel(), services = []) {
-    this.brand = brand;
-    this.model = model;
-    this.washed = false;
-    this._services = services;
-  }
-
-  static noCarBaseModel() {
-    return "none";
-  }
-
-  washReady() {
-    this.washed = true;
-    CarWash.counter++;
-    this.report();
-  }
-  report() {
-    console.log(this.brand, this.model, this.washed);
-  }
-  get services() {
-    console.log(this._services);
-    return this._services.length > 0 ? "Есть доп услуги" : "Нет доп услуг";
-  }
-  set services(addServices) {
-    return this._services.push(addServices);
-  }
-}
-// super - добавляет то что нам нужно от прототипного класса
-class PassCar extends CarWash {
-  constructor(brand, model, services, pass = 5) {
-    super(brand, model, services);
-    this.pass = pass;
-  }
-  washReady() {
-    super.washReady();
-    this.reportOffice();
-  }
-  reportOffice() {
-    console.log("На мойке для легковых была помыта мышина");
-  }
-}
-
-CarWash.counter = 0;
-
-const car1 = new CarWash("mazda", 3, ["black tires", "wacks"]);
-const car2 = new PassCar("BMW", "x5");
-const car3 = new CarWash("Volvo", "s60");
-const car4 = new CarWash("ZAZ");
-
-// car1.washReady();
-// car2.washReady();
-// car3.washReady();
-// car4.washReady();
-
-car1.services = "Протирка стекол";
-
-console.log(car1.services);
-console.log(car2.services);
-
-console.log(CarWash.counter);
-
-console.log(car1);
-console.log(car2);
+// const cars = new Set(["Mazda", "Volvo", "BMW"]);
+// const [car1, car2] = cars;
+// console.log("cars1: ", car1);
+// console.log("cars2: ", car2);
+//
+//
+//
+//
+const cars = new Set(["Mazda", "Volvo", "BMW"]);
+const newCars = new Set(["Toyota", "Bentley", "Volvo"]);
+const allCars = new Set([...cars, ...newCars]);
+console.log(allCars);
