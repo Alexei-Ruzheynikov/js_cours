@@ -1,248 +1,130 @@
-"use strict";
+// "use strict";
 
-// function test() {
-//   const arg = Array.prototype.slice.call(arguments);
-//   console.log(arg);
-// }
-// test("red", 5, 12, "black", [], true, 9);
-
-//...arr рест параметр - троеточие - передаем массив, рест параметр должен идти последним
-// function test(a, b, c, ...arr) {
-//   console.log(a, b, c);
-//   console.log(arr);
-// }
-// test("red", 5, 12, "black", [], true, 9);
-
-// const arr = ["red", 5, 12];
-// const arr2 = ["black", true];
-// function test(a, b, c, d, e, f) {
-//   console.log(a, b, c);
-//   console.log(d, e, f);
-// }
-// записывает массив в 1 значение
-// test(arr);
-//спред параметр записывает в каждую переменную элемент
-// test(...arr, 50, ...arr2);
-//
-//
-//с помощью спред оператора из нескольких массивов можем собрать один
-// const arr = ["red", 5, 12];
-// const arr2 = ["black", true];
-// const arr3 = [...arr, ...arr2];
-// console.log("arr3: ", arr3);
-
-//
-//
-// const allp = document.querySelectorAll("p");
-// console.log(allp);
-// const newp = [...allp];
-// console.log(newp);
-
-//
-//
-// const car = {
-//   brand: "mazda",
-//   model: 3,
-//   options: {
-//     color: "green",
-//     abs: true,
-//   },
-// };
-//старый вариант
-// const brand = car.brand;
-// const model = car.model;
-// const color = car.color;
-
-//деструктуризация объекта
-// const {
-//   brand,
-//   model,
-//   options: { color: carColor, abs: carABS },
-// } = car;
-// console.log(brand, model, carColor, carABS);
-
-// const createCar = ({
-//   brand = "bmw",
-//   model = 6,
-//   color = "black",
-//   colorInt = "white",
-// }) => {
-//   console.log(`
-//   Запущено производство автомобиля ${brand} ${model}
-//   цвет кузова: ${color}
-//   цвет салона: ${colorInt}`);
+// let getMessage = function (name) {
+//   console.log("Привет " + name + "!");
 // };
 
-// createCar({
-// brand: "mazda",
-// model: 3,
-// color: "blue",
-// colorInt: "black",
+// setTimeout выполнится 1 раз
+// console.log(window);
+// setTimeout(function () {
+//   console.log("Сообщение в консоль");
+// }, 1000);
+
+// setInterval выполнится бесконечно раз
+// let count = 0;
+// let idInterval = setInterval(function () {
+//   count++;
+//   console.log("Привет, я setInterval" + count);
+// }, 2000);
+
+// let idInterval = setInterval(getMessage, 2000, "Василий");
+
+// clearInterval - выключает выполнеине setInterval
+// в этой конструкции сброс произойдет через 6 секунд
+// setTimeout(function () {
+//   clearInterval(idInterval);
+// }, 6000);
+
+// let idTimeout = setTimeout(getMessage, 6000, "Иван");
+
+//clearTimeout -выключает выполнеине setTimeout
+// clearTimeout(idTimeout);
+
+// let worm = document.querySelector(".worm"),
+//   airplane = document.querySelector(".airplane"),
+//   count = 0;
+// let flyInterval;
+// let wormDown = function () {
+//   count++;
+//   worm.style.top = count * 2 + "px";
+//   airplane.style.left = count * 2 + "px";
+//   if (count < 350) {
+//     setTimeout(wormDown, 10);
+//   }
+// };
+// wormDown();
+
+// let wormDown = function () {
+//   count++;
+
+//   if (count < 350) {
+//     worm.style.top = count * 2 + "px";
+//     airplane.style.left = count * 2 + "px";
+//   } else if (count < 500) {
+//     airplane.style.left = count * 2 + "px";
+//   } else {
+//     clearInterval(idInterval);
+//   }
+//   console.log(count);
+// };
+// let idInterval = setInterval(wormDown, 10);
+
+// let flyAnimate = function () {
+//   count++;
+//   flyInterval = requestAnimationFrame(flyAnimate);
+//   if (count < 350) {
+//     worm.style.top = count * 2 + "px";
+//     airplane.style.left = count * 2 + "px";
+//   } else if (count < 500) {
+//     airplane.style.left = count * 2 + "px";
+//   } else {
+//     cancelAnimationFrame(flyInterval);
+//   }
+//   console.log(count);
+// };
+// let animate = false;
+// // flyInterval = requestAnimationFrame(flyAnimate);
+// document.addEventListener("click", function () {
+//   if (animate) {
+//     flyInterval = requestAnimationFrame(flyAnimate);
+//     animate = false;
+//   } else {
+//     animate = true;
+//     cancelAnimationFrame(flyInterval);
+//   }
 // });
 
-//деструктуризация массива
-// const cars = ["mazda", "bmw", "audi", "mercedes-benz", "ЗИЛ"];
-// const [a, b, c] = cars;
-// console.log(a);
-// console.log(b);
-// console.log(c);
+//Текущая дата и время
+// let date = new Date();
+// // Можем задать свое время
+// // let date = new Date("1987 10 march");
+// // let date = new Date(1987, 10, 22, 9, 30, 15, 100);
+// // console.log(date);
+// // date.setFullYear(2000);
+// console.log(date);
+// console.log(date.getTime());
 
-//деструктуризация многомерного массива
-// const cars = [["mazda", "bmw"], ["audi", "mercedes-benz"], "ЗИЛ"];
-// const [a, b, c] = cars;
-// console.log(a);
-// console.log(b);
-// console.log(c);
+// // ТОлько время
+// console.log(date.toTimeString());
+// //Только дата
+// console.log(date.toDateString());
+// //В формате локализации добавляем toLocale
+// console.log(date.toLocaleTimeString("ru"));
+// console.log(date.toLocaleDateString("ru"));
 
-//деструктуризация многомерного массива - всех элементов по отдельности
-// const cars = [["mazda", "bmw"], ["audi", "mercedes-benz"], "ЗИЛ"];
-// const [[a, b], [c, d], e] = cars;
-// console.log(a);
-// console.log(b);
-// console.log(c);
-// console.log(d);
-// console.log(e);
+// //Метод now() - выведет количество сепкунд с 1970 до настоящего времени
+// console.log(Date.now());
 
-//
-//
-// const carsModel = {
-//   brand: "Volvo",
-//   models: {
-//     sedan: ["s60", "s90"],
-//     cross: ["v60", "v90"],
-//   },
-// };
-// const {
-//   models: {
-//     sedan: [s1, s2],
-//     cross: [c1, c2],
-//   },
-// } = carsModel;
-// console.log(s1, s2, c1, c2);
+// // Метод parse - выведет с 1970 до даты указанной в скобках
+// console.log(Date.parse("10 march 1980"));
 
-// const car = "bentley";
-// const cycle = "bmx";
-// const bike = "honda";
+// console.log("год " + date.getFullYear());
+// console.log("месяц " + (date.getMonth() + 1));
+// console.log("День месяца  " + date.getDate());
+// console.log("День недели  " + date.getDay());
+// console.log("час " + date.getHours());
+// console.log("минуты " + date.getMinutes());
+// console.log("секунды " + date.getSeconds());
+// console.log("миллисекунды " + date.getMilliseconds());
 
-// const transport = {
-//   car,
-//   cycle,
-//   bike,
-//   ride() {
-//     console.log("go ride");
-//   },
-// };
+//Что значит дата по гринвичу?
 
-// console.log(transport);
-
-//
-//
-
-// const transport = {
-//   bike: "honda",
-//   car: "bentley",
-//   cycle: "bmx",
-// };
-
-// const newTransport = {
-//   bike: "suziki",
-//   quadBike: "polaris",
-// };
-
-// const newTransport2 = {
-//   bike: "Ducati",
-// };
-// //Так создаем новый объект {} - объект в куда будут записывать последующие свойства из объектов
-// const currentTransport = Object.assign(
-//   {},
-//   transport,
-//   newTransport,
-//   newTransport2
-// );
-
-// console.log(currentTransport);
-
-//
-//
-// Коллекция map и set
-
-// const obj = {
-//   a: 5,
-//   b: 10,
-// };
-// console.log(obj);
-//
-//
-//
-// const map = new Map([
-//   [2019, "auto"],
-//   ["joker", 1],
-// ]);
-// map.set("car", { brand: "mazda", model: 3 });
-// map.set(777, "три топора");
-// map.set(null, "даже так");
-// map.set(NaN, "Ух ты");
-// map.set(undefined, "неожиданно");
-// const obj = {
-//   name: "Макс",
-//   age: 30,
-// };
-// map.set(obj, 123);
-// const func = () => {
-//   console.log("Hello");
-// };
-// map.set(func, "yxx");
-// map.set(false, true);
-
-// console.log(map.get(func));
-// console.log(map.size);
-// console.log(map);
-//
-//
-// const collectMap = new Map([
-//   ["hello", "world"],
-//   ["year", 1812],
-// ]);
-// collectMap.delete("year");
-// //clear - удаляет все элементы
-// collectMap.clear();
-// const arr = Array.from(map);
-// map.forEach((value, key) => {
-//   console.log(`ключ: ${key} значение: ${value}`);
-// });
-// for ([key, value] of map) {
-//   console.log(`ключ: ${key} значение: ${value}`);
-// }
-// // console.log(arr);
-//
-//
-//
-//Коллекция содержит только уникальные значение(3 элемента, а не 5)
-// const cars = new Set();
-// cars.add("Mazda");
-// cars.add("Volvo");
-// cars.add("BMW");
-// cars.add("Volvo");
-// cars.add("BMW");
-// console.log(cars);
-// console.log(cars.size);
-// содержится ли элемент has
-// console.log(cars.has(null));
-//удаление элемента
-// cars.delete("BMW");
-
-//
-//
-//
-// const cars = new Set(["Mazda", "Volvo", "BMW"]);
-// const [car1, car2] = cars;
-// console.log("cars1: ", car1);
-// console.log("cars2: ", car2);
-//
-//
-//
-//
-const cars = new Set(["Mazda", "Volvo", "BMW"]);
-const newCars = new Set(["Toyota", "Bentley", "Volvo"]);
-const allCars = new Set([...cars, ...newCars]);
-console.log(allCars);
+//По Eslint
+// установка eslist
+// npm i -g eslint
+// Проверка файла на ошибки
+//eslint script.js
+//Автоматическое исправляет ошибки с помощью компанды -
+//eslint --fix script.js
+let num = 0;
+console.log(num);
