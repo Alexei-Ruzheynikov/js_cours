@@ -80,6 +80,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //   };
   //   toggleMenu();
   // Menu End
+
   // Menu Start 2 variant
   const toggleMenu = () => {
     const btnMenu = document.querySelector(".menu"),
@@ -102,6 +103,7 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   toggleMenu();
   // Menu End 2 variant
+
   // Popup window Start
   const togglePopUp = () => {
     const popup = document.querySelector(".popup"),
