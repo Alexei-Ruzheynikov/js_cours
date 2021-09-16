@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", function () {
         timeRemaining: timeRemaining,
         hours: hours,
         minutes: minutes,
-        seconds: seconds,
+        seconds: seconds
       };
     }
 
@@ -108,7 +108,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const togglePopUp = () => {
     const popup = document.querySelector(".popup"),
       popupBtn = document.querySelectorAll(".popup-btn"),
-      popUpClose = document.querySelector(".popup-close"),
+      // popUpClose = document.querySelector(".popup-close"),
       popupContent = document.querySelector(".popup-content");
 
     const animatePopup = () => {
@@ -140,8 +140,19 @@ window.addEventListener("DOMContentLoaded", function () {
     popupBtn.forEach((elem) => {
       elem.addEventListener("click", animatePopup);
     });
-    popUpClose.addEventListener("click", () => {
-      popup.style.display = "none";
+    // popUpClose.addEventListener("click", () => {
+    //   popup.style.display = "none";
+    // });
+    popup.addEventListener("click", (event) => {
+      let target = event.target;
+      if (target.classList.contains("popup-close")) {
+        popup.style.display = "none";
+      } else {
+        target = target.closest(".popup-content");
+        if (!target) {
+          popup.style.display = "none";
+        }
+      }
     });
   };
   togglePopUp();
@@ -162,4 +173,41 @@ window.addEventListener("DOMContentLoaded", function () {
   //Пока оставлю создание плавной прокрутки на будущее
 
   // Button Scroll First Screen END
+
+  // Tabs Start
+  const tabs = () => {
+    const tabHeader = document.querySelector(".service-header"),
+      tab = tabHeader.querySelectorAll(".service-header-tab"),
+      tabContent = document.querySelectorAll(".service-tab");
+
+    const toggleTabContent = (index) => {
+      for (let i = 0; i < tabContent.length; i++) {
+        if (index === i) {
+          tab[i].classList.add("active");
+          tabContent[i].classList.remove("d-none");
+        } else {
+          tab[i].classList.remove("active");
+          tabContent[i].classList.add("d-none");
+        }
+      }
+    };
+
+    tabHeader.addEventListener("click", (event) => {
+      let target = event.target;
+      target = target.closest(".service-header-tab");
+      // while (target !== tabHeader) {
+      if (target.classList.contains("service-header-tab")) {
+        tab.forEach((item, i) => {
+          if (item === target) {
+            toggleTabContent(i);
+          }
+        });
+        // return;
+      }
+      // target = target.parentNode;
+      // }
+    });
+  };
+  tabs();
+  // Tabs End
 });
