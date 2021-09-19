@@ -372,5 +372,60 @@ window.addEventListener("DOMContentLoaded", function () {
 
   //send-ajax-form-Start
 
+  const sendForm = () => {
+    const errorMessage = "Что-то пошло не так...",
+      loadMessage = "Загрузка...",
+      successMessage = "Спасибо! Мы скоро свяжемся с вами!";
+
+    const form = document.getElementById("form1");
+
+    const statusMessage = document.createElement("div");
+    statusMessage.style.cssText = "font-size: 2rem;";
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      form.appendChild(statusMessage);
+      const formData = new FormData(form);
+      let body = {};
+      // for (let val of formData.entries()) {
+      //   body[val[0]] = val[1];
+      // }
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+      postData(
+        body,
+        () => {
+          statusMessage.textContent = successMessage;
+        },
+        (error) => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+        }
+      );
+    });
+
+    const postData = (body, outputData, errorData) => {
+      const request = new XMLHttpRequest();
+      request.addEventListener("readystatechange", () => {
+        statusMessage.textContent = loadMessage;
+
+        if (request.readyState !== 4) {
+          return;
+        }
+        if (request.status === 200) {
+          outputData();
+        } else {
+          errorData(request.status);
+        }
+      });
+
+      request.open("POST", "server.php");
+      request.setRequestHeader("Content-Type", "application/json");
+
+      request.send(JSON.stringify(body));
+    };
+  };
+  sendForm();
+
   //send-ajax-form-END
 });
