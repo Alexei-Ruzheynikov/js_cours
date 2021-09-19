@@ -1,71 +1,74 @@
-"use strict";
+document.addEventListener("DOMContentLoded", () => {
+  ("use strict");
 
-// const phone = document.getElementById("phone");
+  // Аякс - технология обращения к серверу без перезагрузки страницы
+  // JSON -текстовый набор данных имеющий ключ значение
+  // {
+  //   const smartphone = {
+  //     brand: "samsung",
+  //     screen: 5.5,
+  //     rom: 128,
+  //     ram: 4,
+  //     gps: true,
+  //     sensor: ["Accelerometer", "E-compass", "Fingerprint Sensor", "Gyroscope"],
+  //     camera: {
+  //       back: [32, 5, 8],
+  //       front: 16
+  //     }
+  //   };
+  //   // Преобразовали в JSON формат
+  //   const jsonSmart = JSON.stringify(smartphone);
 
-// const showLog = function () {
-//   this.value = this.value.replace(/\D/g, "");
-// };
+  //   // JSON.parse(jsonSmart) - json формат преобразует в обычный объект
+  //   // console.log(JSON.parse(jsonSmart));
+  // }
 
-// срабатывает при нажатии кнопки
-// phone.addEventListener("keydown", showLog);
-// срабатывает при отпускании кнопки
-// phone.addEventListener("keyup", showLog);
-// //срабатывает, только когда како-либо символ вводится
-// phone.addEventListener("keypress", showLog);
-// //срабатывает, при изменении value
-// phone.addEventListener("input", showLog);
+  // пример не отработал, не известно почему
+  const select = document.getElementById("cars"),
+    output = document.getElementById("output");
 
-// maskPhone("#phone", "8(___)___-____");
+  select.addEventListener("change", () => {
+    const request = new XMLHttpRequest();
+    //GET - получать данные
+    request.open("GET", "/cars.json");
 
-//
-//
-//
-//
+    request.setRequestHeader("Content-type", "application/json");
 
-//Про валидацию
-// const myForm = document.getElementById("myform");
+    request.send();
 
-// myForm.addEventListener("submit", valid);
+    request.addEventListener("readystatechange", () => {
+      if (request.readyState === 4 && request.status === 200) {
+        const data = JSON.parse(request.responseText);
+        data.cars.forEach((item) => {
+          if (item.brand === select.value) {
+            const { brand, model, price } = item;
+            output.innerHTML = `Тачка ${brand} ${model} <br>
+            Цена ${price}$`;
+          }
+        });
+      } else {
+        output.innerHTML = " Произошла ошибка";
+      }
+    });
+  });
 
-// const elementsForm = [];
+  // request.addEventListener('loadstart', (event) => {
+  //   console.log(event);
+  // })
 
-// for (const elem of myForm.elements) {
-//   if (elem.tagName.toLowerCase() !== "button" && elem.type !== "button") {
-//     elementsForm.push(elem);
-//   }
-// }
-// console.log(elementsForm);
+  // request.addEventListener("progress", (event) => {
+  //   console.log(event);
+  // });
 
-// function valid(event) {
-//   const patternPhone = /^\d+$/;
-//   elementsForm.forEach((elem) => {
-//     if (!elem.value) {
-//       elem.style.border = "1px solid red";
-//       event.preventDefault();
-//     } else {
-//       elem.style.border = "";
-//     }
+  // request.addEventListener("abort", (event) => {
+  //   console.log(event);
+  // });
 
-//     if (elem.id === "phone" && !patternPhone.test(elem.value)) {
-//       elem.style.border = "1px solid red";
-//       event.preventDefault();
-//     }
-//   });
-// }
+  // request.addEventListener("load", (event) => {
+  //   console.log(event);
+  // });
 
-// Практика
-//
-//
-const valid = new Validator({
-  selector: "#myform",
-  pattern: {
-    phone: /^\+380\d{7}$/,
-    zip: /\d{5,6}/
-  },
-  method: {
-    phone: [["notEmpty"], ["pattern", "phone"]],
-    email: [["notEmpty"], ["pattern", "email"]]
-  }
+  // request.addEventListener("loadend", (event) => {
+  //   console.log(event);
+  // });
 });
-
-valid.init();
