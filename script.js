@@ -1,177 +1,248 @@
 "use strict";
 
-class Todo {
-  constructor(selectorToForm, selectorLists) {
-    this.todoList = [];
-    this.toForm = selectorToForm;
-    this.toLists = selectorLists;
-    this.elementsForm = new FormTodo().elements;
-    this.lists = new ListTodo("todo-list", "todo-completed");
-  }
-  init() {
-    this.todoList = JSON.parse(localStorage.getItem("todo-max") || "[]");
-    this.todoList.forEach(this.renderItem, this);
-    document.querySelector(this.toForm).append(this.elementsForm.form);
-    this.elementsForm.form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      this.addTodo(this.elementsForm.input.value);
-      this.elementsForm.form.reset();
-    });
+// Мемоизация - работает как выбор фильтра в интернет магазине
 
-    document
-      .querySelector(this.toLists)
-      .append(this.lists.todo, this.lists.todoCompleted);
-  }
+// console.log("Memoize");
 
-  renderItem({ id, text, check }) {
-    const item = new TodoItem(text).item;
-    check
-      ? this.lists.todoCompleted.append(item.elem)
-      : this.lists.todo.append(item.elem);
+// // const strKey = (item) => item.toString() + "(" + typeof item + ")";
 
-    item.btnComplete.addEventListener(
-      "click",
-      this.changeTodo.bind(this, id, item.elem)
-    );
-    item.btnRemove.addEventListener(
-      "click",
-      this.removeTodo.bind(this, id, item.elem)
-    );
-  }
+// const strKey = (item) => JSON.stringify(item) + "(" + typeof item + ")";
 
-  addTodo(text) {
-    const todoItem = {
-      id: (+new Date() + "").substring(4),
-      text,
-      check: false
-    };
-    this.todoList = [...this.todoList, todoItem];
-    this.renderItem(todoItem);
+// const generateKey = (args) => args.map(strKey).join(",");
 
-    this.setLocalStorage();
-  }
-  setLocalStorage() {
-    localStorage.setItem("todo-max", JSON.stringify(this.todoList));
-  }
-  removeTodo(id, elem) {
-    this.todoList = this.todoList.filter((item) => item.id !== id);
-    this.setLocalStorage();
-    elem.remove();
-  }
-  changeTodo(id, elem) {
-    const item = this.todoList.find((item) => item.id === id);
+// const memoize = (fn, length) => {
+//   const cache = new Map();
+//   return (...args) => {
+//     const key = generateKey(args);
+//     if (cache.has(key)) return cache.get(key);
+//     const res = fn(...args);
+//     if (cache.size >= length) {
+//       const firstKey = cache.keys().next().value;
+//       console.log("удаляем", firstKey);
+//       cache.delete(firstKey);
+//     }
+//     cache.set(key, res);
+//     return res;
+//   };
+// };
 
-    item.check
-      ? this.lists.todo.append(elem)
-      : this.lists.todoCompleted.append(elem);
+// // const memoize = (fn) => {
+// //   const cache = {};
+// //   return (...args) => {
+// //     const key = generateKey(args);
+// //     const val = cache[key];
+// //     if (val) return val;
+// //     const res = fn(...args);
+// //     cache[key] = res;
+// //     return res;
+// //   };
+// // };
 
-    item.check = !item.check;
-    this.setLocalStorage();
-  }
+// // const foo = (a, b) => {
+// //   let res = 0;
+// //   for (let i = a; i < b; i++) {
+// //     res += 1;
+// //   }
+// //   return res;
+// // };
+
+// // const fooMem = memoize(foo);
+
+// // console.log(fooMem(1, 1000000000));
+// // console.log(fooMem(1, 1000000001));
+// // console.log(fooMem(1, 1000000002));
+// // console.log(fooMem(1, 1000000003));
+// // console.log(fooMem(1, 1000000000));
+// // console.log(fooMem(1, 1000000001));
+// // console.log(fooMem(1, 1000000002));
+// // console.log(fooMem(1, 1000000003));
+
+// // const fib = (n) => (n <= 2 ? 1 : fib(n - 1) + fib(n - 2));
+
+// const fib = (n) => n;
+
+// // const fibMem = memoize(fib);
+// const fibMem = memoize(fib, 4);
+
+// // console.log(fibMem(40));
+// // console.log(fibMem(41));
+// // console.log(fibMem(40));
+// // console.log(fibMem(42));
+// // console.log(fibMem(44));
+// // console.log(fibMem(43));
+
+// console.log(fibMem({ a: 1 }));
+// console.log(fibMem({ a: 2 }));
+// console.log(fibMem({ a: 3 }));
+// console.log(fibMem({ a: 4 }));
+// console.log(fibMem({ a: 5 }));
+// console.log(fibMem({ a: 6 }));
+
+// Чейнинг - вызов функции друг за другом  принцип 10000 - 1000 - 10000 - 20
+// const foo = function (a) {
+//   return function (b) {
+//     return function (c) {
+//       return a + b + c;
+//     };
+//   };
+// };
+
+// const foo = (a) => (b) => (c) => a + b + c;
+
+// // const foo1 = foo(2);
+// // console.log("foo1: ", foo1);
+
+// // const foo2 = foo1(2);
+// // console.log("foo2: ", foo2);
+
+// // const foo3 = foo2(3);
+// // console.log("foo3: ", foo3);
+
+// foo(1)(2)(3);
+// console.log(foo(1)(2)(3));
+
+//
+//
+//
+
+{
+  const Race = function (count) {
+    this.count = count;
+    this.racer = [];
+  };
+  Race.prototype.addRacer = function (name) {
+    if (this.count <= 0) {
+      console.log("Заявки в команду больше не принимаем");
+      return this;
+    }
+    this.racer.push(name);
+    this.count--;
+    console.log(this.racer);
+    return this;
+  };
+  const maximum = new Race(2);
+  // maximum.addRacer("Вася").addRacer("Петя");
 }
 
-class FormTodo {
-  constructor() {
-    this.elements = this.createForm();
-  }
-  createForm() {
-    const form = document.createElement("form");
-    form.classList.add("todo-control");
-    const label = document.createElement("label");
-    const input = document.createElement("input");
-    input.classList.add("header-input");
-    const button = document.createElement("button");
-    button.classList.add("header-button");
+//
+//
+//
 
-    label.append(input);
-    form.append(label, button);
-    return { input, form };
+{
+  class Race {
+    constructor(count) {
+      this.count = count;
+      this.racer = [];
+    }
+    addRacer(name) {
+      if (this.count <= 0) {
+        console.log("Заявки в команду больше не принимаем");
+        return this;
+      }
+      this.racer.push(name);
+      this.count--;
+      console.log(this.racer);
+      return this;
+    }
   }
-  submitForm() {}
+
+  const maximum = new Race(3);
+  //    maximum
+  //     .addRacer("Вася")
+  //     .addRacer("Петя")
+  //     .addRacer("Микола")
+  //     .addRacer("Екатерина");
 }
 
-class ListTodo {
-  constructor(selectorList, selectorListComplete) {
-    this.todo = this.createList(selectorList);
-    this.todoCompleted = this.createList(selectorListComplete);
-  }
-  createList(selectorList) {
-    const ul = document.createElement("ul");
-    ul.classList.add("todo", selectorList);
-    return ul;
-  }
-}
-class TodoItem {
-  constructor(text) {
-    this.item = this.createItem(text);
-  }
-  createItem(text) {
-    const li = document.createElement("li");
-    li.classList.add("todo-item");
-    const span = document.createElement("span");
-    span.classList.add("text-todo");
-    span.textContent = text;
-
-    const buttons = document.createElement("div");
-    buttons.classList.add("todo-buttons");
-
-    const btnRemove = document.createElement("button");
-    btnRemove.classList.add("todo-remove");
-
-    const btnComplete = document.createElement("button");
-    btnComplete.classList.add("todo-complete");
-
-    buttons.append(btnComplete, btnRemove);
-    li.append(span, buttons);
-    return {
-      elem: li,
-      btnRemove,
-      btnComplete
-    };
-  }
-}
-
-const form = new Todo(".header", ".todo-container");
-
-form.init();
+//
+//
+//
+//
 
 // {
-//   let b = {};
-//   let c;
-//   b.b = 1;
-//   c = b;
-//   c.b = 2;
-//   console.log(b.b);
-//   console.log(c.b);
+// function Foo(x) {
+//   this.x = x;
+// }
+// Foo.prototype.map = function (fn) {
+//   return new Foo(fn(this.x));
+// };
+
+// new Foo(5).map((a) => console.log(a + a));
+// new Foo("Привет").map(console.log);
+
+// function foo(x) {
+//   return function (fn) {
+//     return foo(fn(x));
+//   };
 // }
 
-// {
-//   let arr = [1, 2, 3, 4, 5];
-//   let result = arr.filter(function (el) {
-//     return el % 2;
-//   });
-//   console.log(result);
-// }
-
-// {
-//   console.log(0.1 + 0.2 - 0.2 === 0.1);
+// foo(5)((a) => console.log(a + a));
+// foo("Привет")(console.log);
 // }
 
 {
-  function add_v1(a, b) {
-    let sum = a;
-
-    let makeSum = function (b) {
-      if (b) {
-        sum += b;
-        return makeSum;
-      } else {
-        return sum;
+  const race = (count = 0, racer = []) => ({
+    addRacer: (name) => {
+      if (count <= 0) {
+        console.log("Заявки в команду больше не принимаем");
+        return race(count, racer);
       }
-    };
+      racer.push(name);
+      count--;
+      console.log(racer);
+      return race(count, racer);
+    }
+  });
 
-    return makeSum;
-  }
-
-  console.log(add_v1(2)(5)(7)()); // 14
+  const maximum = race(4);
+  maximum
+    .addRacer("Вася")
+    .addRacer("Петя")
+    .addRacer("Микола")
+    .addRacer("Екатерина")
+    .addRacer("Максим");
 }
+
+{
+  const race = (
+    count = 0,
+    racer = [],
+    obj = {
+      addRacer: (name) => {
+        if (count <= 0) {
+          console.log("Заявки в команду больше не принимаем");
+          return race(count, racer, obj);
+        }
+        racer.push(name);
+        count--;
+        console.log(racer);
+        return race(count, racer, obj);
+      },
+      removeRacer: (name) => {
+        const exist = racer.indexOf(name);
+        if (exist === -1) {
+          console.log("Такого участника нет в списке");
+          return race(count, racer, obj);
+        }
+        racer.splice(exist, 1);
+        count++;
+        console.log(racer);
+        return race(count, racer, obj);
+      }
+    }
+  ) => obj;
+
+  const maximum = race(3);
+  maximum
+    .addRacer("Вася")
+    .addRacer("Петя")
+    .removeRacer("Виталий")
+    .addRacer("Микола")
+    .addRacer("Екатерина")
+    .addRacer("Максим")
+    .removeRacer("Микола")
+    .addRacer("Илья");
+}
+
+//Последний пример - объединение ООП и функционального программирования
+// Это база по чейнингу. Изучить это, далее, чейнинги аснхронные, чяейннинги на промисах, на функтерах, прототипах, фабриках.
