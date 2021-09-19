@@ -134,3 +134,44 @@ class TodoItem {
 const form = new Todo(".header", ".todo-container");
 
 form.init();
+
+// {
+//   let b = {};
+//   let c;
+//   b.b = 1;
+//   c = b;
+//   c.b = 2;
+//   console.log(b.b);
+//   console.log(c.b);
+// }
+
+// {
+//   let arr = [1, 2, 3, 4, 5];
+//   let result = arr.filter(function (el) {
+//     return el % 2;
+//   });
+//   console.log(result);
+// }
+
+// {
+//   console.log(0.1 + 0.2 - 0.2 === 0.1);
+// }
+
+{
+  function add_v1(a, b) {
+    let sum = a;
+
+    let makeSum = function (b) {
+      if (b) {
+        sum += b;
+        return makeSum;
+      } else {
+        return sum;
+      }
+    };
+
+    return makeSum;
+  }
+
+  console.log(add_v1(2)(5)(7)()); // 14
+}
