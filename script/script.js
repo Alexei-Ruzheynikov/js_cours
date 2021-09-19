@@ -369,4 +369,8 @@ window.addEventListener("DOMContentLoaded", function () {
   calc(100);
 
   //Calculator End
+
+  //send-ajax-form-Start
+
+  //send-ajax-form-END
 });
